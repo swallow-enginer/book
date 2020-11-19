@@ -13,6 +13,7 @@ export default Object.freeze({
     TEMPLATE_INPUT   : "/template-input",
     TEMPLATE_SHOW    : "/template-show",
     SEARCH           : "/search",
+    SEARCH_RESULT    : "/search-result",
   },
 
   API: {

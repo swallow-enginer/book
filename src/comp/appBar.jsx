@@ -6,16 +6,12 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AddIcon from '@material-ui/icons/Add';
-import SaveIcon from '@material-ui/icons/Save';
-import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import React, {useState} from 'react';
 import appConst from "@lib/appConst";
 import { useRouter } from 'next/router';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { SettingsApplicationsTwoTone } from '@material-ui/icons';
-import CategoryEntryDialog from '@comp/CategoryEntryDialog'
+import BookEntryDialog from '@comp/BookEntryDialog'
+import SearchBar from '@comp/searchBar'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,41 +36,40 @@ export default function ButtonAppBar(props) {
   const router = useRouter();
 
   /** カテゴリーの登録処理 */
-  const handleSaveCategory = () => {
-    setPageProps({...pageProps, categoryEntryDialogOpen: false})
+  const handleSaveBook = () => {
+    setPageProps({...pageProps, bookEntryDialogOpen: false})
   }
 
-  /** 戻るボタンのクリック */
-  const handleBackPage = () => {
-    //入力途中のチェック必要
-    router.push(appConst.URL.INDEX);
-    return;
-  }
-    /** 画面パラメータ */
-    const [pageProps, setPageProps] = useState({
-      categoryEntryDialogOpen: false,
-    });
+  /** 画面パラメータ */
+  const [pageProps, setPageProps] = useState({
+    bookEntryDialogOpen: false,
+  });
 
+  /**
+   * 
+   */
   const getAppBar = () => {
     const href = router.pathname;
     
     switch (href) {
       //ホーム画面
       case appConst.URL.INDEX:
+      case  appConst.URL.SEARCH_RESULT:
         return getHomeAppBar();
-      
-      //テンプレート入力画面
-      case appConst.URL.TEMPLATE_INPUT:
-        return getTemplateInputAppBar();
-      
-      //検索画面
-      case appConst.URL.SEARCH:
-        return getSearchAppBar();
-      
-        //タスク表示画面
-      case appConst.URL.TEMPLATE_SHOW:
-        return getTemplateShowAppBar();
     }
+  }
+
+  /**
+   * 
+   * @param {object} e イベント
+   */
+  const search = (e) => {
+    //Enterボタン以外
+    if (e.keyCode !== 13 || !e.target.value) {
+      return;
+    }
+    
+    router.push(appConst.URL.SEARCH_RESULT)
   }
 
   const compProps = {
@@ -88,19 +83,19 @@ export default function ButtonAppBar(props) {
     headerButton : {
       className  : classes.headerButton,
       color      : "primary",
-      onClick    : setPageProps({...pageProps, categoryEntryDialogOpen: true}),
+      onClick    : () => setPageProps({...pageProps, bookEntryDialogOpen: true}),
     },
     headerTitle : {
       variant   : "h6",
       className : classes.title
     },
-    arrowBackButton: {
-      onClick: handleBackPage
+    bookEntryDialog: {
+      open : pageProps.bookEntryDialogOpen,
+      onClose: () => setPageProps({...pageProps, bookEntryDialogOpen: false}),
+      onSave: (book) => handleSaveBook(book)
     },
-    categoryEntryDialog: {
-      open : pageProps.categoryEntryDialogOpen,
-      onClose: () => setPageProps({...pageProps, categoryEntryDialogOpen: false}),
-      onSave: (category) => handleSaveCategory(category)
+    searchBar: {
+      search: (e) => search(e)
     }
   }
 
@@ -116,65 +111,17 @@ export default function ButtonAppBar(props) {
           <Typography {...compProps.headerTitle}>
             ホーム
           </Typography>
+          <SearchBar {...compProps.searchBar}/>
           {/* <Avatar /> */}
           <Box ml={2}>
             <Button {...compProps.headerButton}>
               <AddIcon />本追加
             </Button>
           </Box>
-          <CategoryEntryDialog {...compProps.categoryEntryDialog} />
+          <BookEntryDialog {...compProps.bookEntryDialog} />
       </>
     )
   }
-
-    /**
-   * テンプレート表示画面のヘッダー
-   */
-  const getTemplateShowAppBar = () => {
-    return (
-      <>
-        <ButtonBase {...compProps.arrowBackButton}><ArrowBackIcon /></ButtonBase>
-        <Typography {...compProps.headerTitle}>
-            テンプレート内容
-          </Typography>
-        <Box ml={2}><Button {...compProps.headerButton}>
-          <SaveIcon />編集
-        </Button></Box>
-      </>
-    )
-  }
-
-  /**
-   * テンプレート入力画面のヘッダー
-   */
-  const getTemplateInputAppBar = () => {
-    return (
-      <>
-        <ButtonBase {...compProps.arrowBackButton}><ArrowBackIcon /></ButtonBase>
-        <Typography {...compProps.headerTitle}>
-            テンプレート登録
-          </Typography>
-        <Box ml={2}><Button {...compProps.headerButton}>
-          <SaveIcon />保存
-        </Button></Box>
-      </>
-    )
-  }
-
-  /**
-   * 検索画面のヘッダー
-   */
-  const getSearchAppBar = () => {
-    return (
-      <>
-        <ArrowBackIcon />
-        <Typography {...compProps.headerTitle}>
-            検索
-        </Typography>
-      </>
-    )
-  }
-
 
   return (
     <div className={classes.root}>

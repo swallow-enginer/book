@@ -7,8 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   parentButton: {
@@ -16,32 +15,32 @@ const useStyles = makeStyles((theme) => ({
   }}));
 
 
-const categoryEntryDialog = (props) => {
+const bookShowDialog = (props) => {
   const classes = useStyles();
-  const [category, setCategory] = useState({
-    categoryNm: null,
-    parentCategoryId: null,
+  const [book, setBook] = useState({
+    bookNm: null,
+    bookPage: null,
   });
 
   /** ページプロパティ */
   const pageProps = {
-    parentCategoryList: [
+    parentBookList: [
       {
-        categoryId: 0,
-        categoryNm: "テスト"
+        bookId: 0,
+        bookNm: "テスト"
       }
     ]
   }
 
-  const handleCategoryEntryDialogClose = () => {
-    setCategory({})
+  const handleBookEntryDialogClose = () => {
+    setBook({})
     props.onClose()
   }
 
   const compProps = {
     dialog: {
       open: props.open,
-      onClose: handleCategoryEntryDialogClose,
+      onClose: handleBookEntryDialogClose,
       scroll:'paper',
     },
     dialogContent: {
@@ -51,49 +50,42 @@ const categoryEntryDialog = (props) => {
       tabIndex: -1
     },
     saveButton: {
-      onClick: () => props.onSave(category),
+      onClick: () => props.onSave(book),
       color: "primary",
-      disabled: !category.categoryNm
+      disabled: !book.bookNm || (!book.bookPage || !isFinite(book.bookPage))
     },
     cancelButton: {
-      onClick: handleCategoryEntryDialogClose,
+      onClick: handleBookEntryDialogClose,
       color: "primary"
     },
-    categoryNm: {
-      label: "カテゴリー名",
+    bookNm: {
+      label: "タイトル",
       variant: "outlined",
       fullWidth: true,
-      value: category.categoryNm,
-      onChange: (e) => setCategory({...category, categoryNm: e.target.value}),
+      value: book.bookNm,
+      onChange: (e) => setBook({...book, bookNm: e.target.value}),
       helperText:pageProps.errorMessage,
       error: pageProps.errorMessage,
     },
-    parentCategory: {
-      label: "親カテゴリー",
-      value: category.parentCategoryId,
+    parentBook: {
+      label: "ページ数",
+      value: book.bookPage,
       variant: "outlined",
       className: classes.parentButton,
       fullWidth: true,
-      select: true,
       size:"small",
-      onChange: (e) => setCategory({...category, parentCategoryId: e.target.value})
+      error: pageProps.errorMessage,
+      onChange: (e) => setBook({...book, bookPage: e.target.value})
     },
   }
 
-  const getCategoryMenu = () => 
-    pageProps.parentCategoryList.map(category => (
-        <MenuItem value={category.categoryId}>{category.categoryNm}</MenuItem>
-    ))
-
   return (
       <Dialog {...compProps.dialog}>
-        <DialogTitle>カテゴリーの登録</DialogTitle>
+        <DialogTitle>ファスト＆スロー</DialogTitle>
         <DialogContent {...compProps.dialogContent}>
+          <img src="http://books.google.com/books/content?id=OtH1wAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" />
           <DialogContentText {...compProps.dialogContentText}>
-            <TextField {...compProps.categoryNm} />
-            <TextField {...compProps.parentCategory} >
-              {getCategoryMenu()}
-            </TextField>
+            <Typography>200ページ</Typography>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -101,17 +93,17 @@ const categoryEntryDialog = (props) => {
             キャンセル
           </Button>
           <Button {...compProps.saveButton}>
-            保存
+            追加
           </Button>
         </DialogActions>
       </Dialog>
   );
 }
 
-categoryEntryDialog.propTypes = {
+bookShowDialog.propTypes = {
     open: PropTypes.bool,       //表示フラグ
     onClose: PropTypes.func,    //閉じる処理
     onSave: PropTypes.func,     //保存処理
   }
   
-  export default categoryEntryDialog;
+  export default bookShowDialog;

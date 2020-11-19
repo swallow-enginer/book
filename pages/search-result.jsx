@@ -33,7 +33,7 @@ export default function Home(props) {
     <>
       <AppBar onButtonClick={addTemplate}/>
       <Box mx={10} mt={4}>
-      <TemplateList templateList={props.templateList} title="検索結果"/>
+      <TemplateList templateList={props.templateList} title="「AA」の検索結果"/>
       </Box>
       {/* <Test /> */}
     </>

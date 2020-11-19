@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import HelpDialog from '@comp/helpDialog';
-import CategoryEntryDialog from '@comp/categoryEntryDialog';
+import CategoryEntryDialog from '@comp/bookEntryDialog';
 import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({

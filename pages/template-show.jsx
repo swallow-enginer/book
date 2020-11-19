@@ -11,7 +11,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 export async function getServerSideProps() {
   // const router = useRouter();
@@ -217,11 +216,9 @@ const templateShow = (props) => {
           {getArgDataInputList()}
         </Box>
 
-        <CopyToClipboard text={pageProps.replacedTemplate} onCopy={handleCopyButton}>
           <Button {...compProps.copyButton}>
             <AssignmentIcon {...compProps.copyIcon}/>コピー
           </Button>
-        </CopyToClipboard>
 
       </Box>
 
