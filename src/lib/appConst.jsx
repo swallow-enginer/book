@@ -14,13 +14,14 @@ export default Object.freeze({
     TEMPLATE_SHOW    : "/template-show",
     SEARCH           : "/search",
     SEARCH_RESULT    : "/search-result",
+    AMAZON_BOOK      : "https://www.googleapis.com/books/v1/volumes",
   },
 
   API: {
     TEMPLATE :"/api/template",
     CATEGORY :"/api/category",
   },
-
+  
   /** テンプレート一覧の並び順 */
   TEMPLATE_LIST_SORT: {
     NEW : "new",

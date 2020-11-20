@@ -4,7 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Input from '@material-ui/core/Input';
 import SearchIcon from '@material-ui/icons/Search';
-
+import { useRouter } from 'next/router';
+import AppConst from "@lib/appConst";
 
 const styles = theme => ({
     root: {
@@ -58,7 +59,22 @@ const styles = theme => ({
 });
 
 function Search(props) {
-    const { classes, search } = props;
+    const { classes } = props;
+    const router = useRouter();
+
+   /**
+   * 
+   * @param {object} e イベント
+   */
+  const search = (e) => {
+    //Enterボタン以外
+    if (e.keyCode !== 13 || !e.target.value) {
+      return;
+    }
+    
+    router.push(AppConst.URL.SEARCH_RESULT)
+  }
+
     return (
         <div className={classes.root}>
             <div className={classes.search}>
@@ -72,7 +88,7 @@ function Search(props) {
                         root: classes.inputRoot,
                         input: classes.inputInput,
                     }}
-                    onKeyDown={(e) => search(e)}
+                    onKeyDown={search}
                 />
             </div>
         </div>
