@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -62,17 +62,22 @@ function Search(props) {
     const { classes } = props;
     const router = useRouter();
 
+    const [keyword, setKeyword] = useState();
+
    /**
    * 
    * @param {object} e イベント
    */
   const search = (e) => {
     //Enterボタン以外
-    if (e.keyCode !== 13 || !e.target.value) {
+    if (e.keyCode !== 13 || !keyword) {
       return;
     }
     
-    router.push(AppConst.URL.SEARCH_RESULT)
+    router.push({
+        pathname: AppConst.URL.SEARCH_RESULT,
+        query: {keyword: keyword}
+    })
   }
 
     return (
@@ -84,10 +89,12 @@ function Search(props) {
                 <Input
                     placeholder="検索…"
                     disableUnderline
+                    value={keyword}
                     classes={{
                         root: classes.inputRoot,
                         input: classes.inputInput,
                     }}
+                    onChange={(e) => setKeyword(e.target.value)}
                     onKeyDown={search}
                 />
             </div>

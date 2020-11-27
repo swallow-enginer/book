@@ -1,9 +1,9 @@
 import AppBar from "@comp/appBar";
-import TemplateList from "@comp/templateList";
 import { useRouter } from 'next/router';
 import AppConst from "@lib/appConst";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import BookList from "@comp/bookList";
 
 export async function getServerSideProps() {
   const qs = new URLSearchParams({
@@ -23,6 +23,23 @@ export async function getServerSideProps() {
 
 export default function Home(props) {
   const router = useRouter();
+  const bookList = [
+    {
+      title: "aaa",
+      image: "http://books.google.com/books/content?id=ghgzDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+      page : 200,
+    },
+    {
+      title: "aaa",
+      image: "http://books.google.com/books/content?id=ghgzDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+      page : 200,
+    },
+    {
+      title: "aaa",
+      image: "http://books.google.com/books/content?id=ghgzDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+      page : 200,
+    },
+  ];
 
   /**
    * テンプレート追加
@@ -39,9 +56,10 @@ export default function Home(props) {
           </Box>
           <Typography>現在の積み上げ：200mm(60ページ)</Typography>
           <Typography>広辞苑まで：100mm(50ページ)</Typography>
-          <TemplateList templateList={props.templateList} title="最近の記録"/>
-        </Box>
-      {/* <Test /> */}
+          <BookList 
+          bookList={bookList}
+          title="最近の記録"/>
+      </Box>
     </>
   )
 }

@@ -31,9 +31,7 @@ export default function MenuListComposition(props) {
       <Grid container spacing={1}>
         {props.templateList.map(item =>
           <Grid {...compProps.gridItem} key={item.templateId}>
-            <TemplateCard 
-              templateParam={item}
-              />
+            <TemplateCard templateParam={item} />
           </Grid>
         )}
       </Grid>

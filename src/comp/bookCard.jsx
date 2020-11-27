@@ -18,35 +18,39 @@ const bookCard = (props) => {
     img : {
       textAlign: "center"
     },
+
+    //ダイアログ関連のパラメータ
     bookShowDialog: {
       open : pageProps.bookShowDialogOpen,
+      bookParam : props.bookParam,
       onClose: () => setPageProps({...pageProps, bookShowDialogOpen: false}),
-      onSave: () => setPageProps({...pageProps, bookShowDialogOpen: false})
+      onSave: () => setPageProps({...pageProps, bookShowDialogOpen: false}),
+      
     },
+
     showLink: {
       href: "#",
       onClick: () => setPageProps({...pageProps, bookShowDialogOpen: true})
     }
   }
 
-  const getPageCount = (pageCount) => {
-    if (pageCount) {
-      return pageCount + "ページ"
-    }
-    return "ページ情報なし"
-  }
-
   return (
     <Box>
+      {/* 画像の表示 */}
       <Link {...compProps.showLink}>
-        <img src={props.bookParam.imageLinks.smallThumbnail}/>
+        <img src={props.bookParam.image}/>
       </Link>
+      {/* タイトルの表示 */}
       <Typography>
         <Link {...compProps.showLink}>
         {props.bookParam.title}
         </Link>
       </Typography>
-      <Typography>{props.bookParam.pageCount}ページ</Typography>
+
+      {/* ページ数 */}
+      <Typography>{props.bookParam.page}ページ</Typography>
+
+      {/* ダイアログ */}
       <BookEntryDialog {...compProps.bookShowDialog} />
     </Box>
   );

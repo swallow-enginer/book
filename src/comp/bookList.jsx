@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MenuListComposition(props) {
   const classes = useStyles();
+  //各グリッドのパラメータ
   const compProps = {
     gridItem: {
       item         : true,
@@ -25,15 +26,16 @@ export default function MenuListComposition(props) {
 
   return (
     <>
+      {/* タイトルの表示 */}
       <Box display="flex" alignItems="center">
         <h2>{props.title}</h2>
       </Box>
+
+      {/* カードのリスト表示 */}
       <Grid container spacing={1}>
         {props.bookList.map(item =>
           <Grid {...compProps.gridItem} key={item.id}>
-            <BookCard 
-              bookParam={item}
-              />
+            <BookCard bookParam={item}/>
           </Grid>
         )}
       </Grid>

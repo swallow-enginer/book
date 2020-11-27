@@ -111,8 +111,11 @@ export default function ButtonAppBar(props) {
           <Typography {...compProps.headerTitle}>
             ホーム
           </Typography>
+
+          {/* 検索 */}
           <SearchBar {...compProps.searchBar}/>
           {/* <Avatar /> */}
+          
           <Box ml={2}>
             <Button {...compProps.headerButton}>
               <AddIcon />本追加

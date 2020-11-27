@@ -6,7 +6,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,16 +21,9 @@ const bookShowDialog = (props) => {
     bookPage: null,
   });
 
-  /** ページプロパティ */
-  const pageProps = {
-    parentBookList: [
-      {
-        bookId: 0,
-        bookNm: "テスト"
-      }
-    ]
-  }
-
+  /**
+   * ダイアログを閉じる際の処理
+   */
   const handleBookEntryDialogClose = () => {
     setBook({})
     props.onClose()
@@ -64,8 +56,6 @@ const bookShowDialog = (props) => {
       fullWidth: true,
       value: book.bookNm,
       onChange: (e) => setBook({...book, bookNm: e.target.value}),
-      helperText:pageProps.errorMessage,
-      error: pageProps.errorMessage,
     },
     parentBook: {
       label: "ページ数",
@@ -74,24 +64,31 @@ const bookShowDialog = (props) => {
       className: classes.parentButton,
       fullWidth: true,
       size:"small",
-      error: pageProps.errorMessage,
       onChange: (e) => setBook({...book, bookPage: e.target.value})
     },
   }
 
   return (
       <Dialog {...compProps.dialog}>
-        <DialogTitle>ファスト＆スロー</DialogTitle>
+
+        {/* タイトル */}
+        <DialogTitle>{props.bookParam.title}</DialogTitle>
+
         <DialogContent {...compProps.dialogContent}>
-          <img src="http://books.google.com/books/content?id=OtH1wAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" />
+          <img src={props.bookParam.image} />
+
           <DialogContentText {...compProps.dialogContentText}>
-            <Typography>200ページ</Typography>
+            <Typography>{props.bookParam.page}ページ</Typography>
           </DialogContentText>
+
         </DialogContent>
+
+        {/* ボタン */}
         <DialogActions>
           <Button {...compProps.cancelButton}>
             キャンセル
           </Button>
+          
           <Button {...compProps.saveButton}>
             追加
           </Button>
