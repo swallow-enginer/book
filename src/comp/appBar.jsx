@@ -12,6 +12,7 @@ import appConst from "@lib/appConst";
 import { useRouter } from 'next/router';
 import BookEntryDialog from '@comp/BookEntryDialog'
 import SearchBar from '@comp/searchBar'
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: "10px 10px 10px 10px",
       backgroundColor: "white",
       '&:hover': { background: "rgba(255, 255, 255, 0.94)" }
+  },
+  homeIcon : {
+    '&:hover': { cursor: "pointer" }
   }
 }));
 
@@ -96,6 +100,13 @@ export default function ButtonAppBar(props) {
     },
     searchBar: {
       search: (e) => search(e)
+    },
+    //ホームアイコン
+    homeIcon: {
+      color: "white",
+      underline: "none",
+      onClick: () => {router.push(appConst.URL.INDEX)},
+      className : classes.homeIcon
     }
   }
 
@@ -109,7 +120,7 @@ export default function ButtonAppBar(props) {
           <MenuIcon />
         </IconButton>
           <Typography {...compProps.headerTitle}>
-            ホーム
+            <Link {...compProps.homeIcon}>ホーム</Link>
           </Typography>
 
           {/* 検索 */}

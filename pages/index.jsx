@@ -4,22 +4,7 @@ import AppConst from "@lib/appConst";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import BookList from "@comp/bookList";
-
-export async function getServerSideProps() {
-  const qs = new URLSearchParams({
-    type: AppConst.URL_QUERY_TYPE.LIST
-  });
-
-  const url = process.env.URL_HOST_TEST + AppConst.API.TEMPLATE + `?${qs}`;
-
-  const response = await fetch(url)
-  return {
-
-    props: {
-      templateList: await response.json()
-    }
-  }
-}
+import Collapse from '@material-ui/core/Collapse';
 
 export default function Home(props) {
   const router = useRouter();

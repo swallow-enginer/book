@@ -8,20 +8,30 @@ import React, {useEffect } from 'react';
 export async function getServerSideProps(context) {
   const keyword = context.query.keyword;  //検索キーワード
 
-  const response = await fetch (encodeURI(`${AppConst.URL.AMAZON_BOOK}?q=${keyword}`));
+  if (!keyword) {
+    setRedirect(context.res);
+    return;
+  }
 
-  // const { res } = context;
-  // res.setHeader("location", "/");
-  // res.statusCode = 302;
-  // res.end();
-  // return;
+  const response = await fetch (encodeURI(`${AppConst.URL.AMAZON_BOOK}?q=${keyword}`));
+  const bookList = await response.json()
+  if (bookList.totalItems == 0) {
+    setRedirect(context.res);
+    return;
+  }
 
   return {
     props: {
-      bookList: await response.json(),  //AMAZONブックの戻り値
-      query : keyword     //クエリ値
+      bookList: bookList,  //AMAZONブックの戻り値
+      query : keyword      //クエリ値
     }
   }
+}
+
+const setRedirect = (res) => {
+  res.setHeader("location", "/");
+  res.statusCode = 302;
+  res.end();
 }
 
 export default function SearchResult(props) {
