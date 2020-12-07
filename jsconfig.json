@@ -9,6 +9,7 @@
         "@api/*"   : ["./pages/api/*"],
         "@login/*" : ["./pages/api/login/*"],
         "@src/*"   : ["./src/*"],
+        "@auth/*"   : ["./src/lib/auth0/*"],
       }
     }
   }

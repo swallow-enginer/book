@@ -4,7 +4,7 @@ import DbConfig from '@lib/dbConfig'
 /**
  * user テーブルの Entity モデル
  */
-const userModel = DbConfig.define('user', {
+const userModel = DbConfig.define('Users', {
   user_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -19,6 +19,8 @@ const userModel = DbConfig.define('user', {
     unique: true,
     comment: "サブID(Auth0で一意のキー)",
   }
+}, {
+  tableName: "user"
 });
 
 userModel.sync({force:true});

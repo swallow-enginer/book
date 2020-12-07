@@ -4,9 +4,21 @@ import AppConst from "@lib/appConst";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import BookList from "@comp/bookList";
-import Collapse from '@material-ui/core/Collapse';
+import withAuth from "@auth/with-auth"
+import { useEffect, useState } from "react";
 
-export default function Home(props) {
+const index = function Index(props) {
+
+  //本のリスト
+  const [book_lists, setBookList] = useState();  
+
+  //レンダリング時の処理
+  useEffect(async () => {
+    const response = await fetch(AppConst.API.BOOK);
+    const data = await response.json();
+    setBookList(data);
+  });
+
   const router = useRouter();
   const bookList = [
     {
@@ -48,3 +60,5 @@ export default function Home(props) {
     </>
   )
 }
+
+export default withAuth(index);
