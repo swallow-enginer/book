@@ -3,6 +3,7 @@ import BookEntryDialog  from "@comp/bookShowDialog";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
+import BookImage from "@comp/bookImage";
 
 const bookCard = (props) => {
 
@@ -37,9 +38,7 @@ const bookCard = (props) => {
   return (
     <Box>
       {/* 画像の表示 */}
-      <Link {...compProps.showLink}>
-        <img src={props.bookParam.image}/>
-      </Link>
+        <BookImage src={props.bookParam.image} amazon_id={props.bookParam.amazon_id}/>
       {/* タイトルの表示 */}
       <Typography>
         <Link {...compProps.showLink}>
@@ -49,6 +48,7 @@ const bookCard = (props) => {
 
       {/* ページ数 */}
       <Typography>{props.bookParam.page}ページ</Typography>
+
 
       {/* ダイアログ */}
       <BookEntryDialog {...compProps.bookShowDialog} />

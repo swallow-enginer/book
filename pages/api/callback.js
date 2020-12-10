@@ -9,9 +9,9 @@ export default async function callback(req, res) {
         //サブからユーザー情報を取得
         let user_info = await User.findOne({where: { sub_id: session.user.sub}});
 
-        // if (!user_info) {
-        //   user_info = insertUser(session.user.sub)
-        // }
+        if (!user_info) {
+          user_info = await insertUser(session.user.sub)
+        }
         
         return {
           ...session,
@@ -31,16 +31,15 @@ export default async function callback(req, res) {
 
 const insertUser = async (sub_id) => {
   //ユーザーIDの採番値の取得
-  const user_id = getNextUserId();
+  // const user_id = getNextUserId();
   //ユーザー情報の登録
-  return User.create({
-    user_id: user_id,
+  const data = await User.create({
     sub_id :sub_id
   });
+  return await data.dataValues;
 }
 
 const getNextUserId = async () => {
   const user = DBConnect.query("SELECT (MAX(user_id) + 1) AS user_id FROM users", { type: QueryTypes.SELECT, plain: true});
-  console.log(user)
   return user.user_id;
 }

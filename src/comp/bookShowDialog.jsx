@@ -86,12 +86,12 @@ const bookShowDialog = (props) => {
         {/* ボタン */}
         <DialogActions>
           <Button {...compProps.cancelButton}>
-            キャンセル
+            閉じる
           </Button>
           
-          <Button {...compProps.saveButton}>
+          {/* <Button {...compProps.saveButton}>
             追加
-          </Button>
+          </Button> */}
         </DialogActions>
       </Dialog>
   );

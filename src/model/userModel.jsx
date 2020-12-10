@@ -8,6 +8,7 @@ const userModel = DbConfig.define('Users', {
   user_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
+    autoIncrement: true,
     comment: "ユーザーID",
   },
   user_nm: {
@@ -23,5 +24,5 @@ const userModel = DbConfig.define('Users', {
   tableName: "user"
 });
 
-userModel.sync({force:true});
+userModel.sync();
 export default userModel;

@@ -13,11 +13,13 @@ const index = function Index(props) {
   const [book_lists, setBookList] = useState();  
 
   //レンダリング時の処理
-  useEffect(async () => {
-    const response = await fetch(AppConst.API.BOOK);
-    const data = await response.json();
-    setBookList(data);
-  });
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(AppConst.API.BOOK + "?" + new URLSearchParams({type: "list"}));
+      const data = await response.json();
+      setBookList(data);
+    })();
+  },[]);
 
   const router = useRouter();
   const bookList = [
@@ -25,16 +27,19 @@ const index = function Index(props) {
       title: "aaa",
       image: "http://books.google.com/books/content?id=ghgzDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
       page : 200,
+      amazon_id: "aaa"
     },
     {
       title: "aaa",
       image: "http://books.google.com/books/content?id=ghgzDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
       page : 200,
+      amazon_id: "aaa"
     },
     {
       title: "aaa",
       image: "http://books.google.com/books/content?id=ghgzDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
       page : 200,
+      amazon_id: "aaa"
     },
   ];
 

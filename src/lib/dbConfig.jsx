@@ -19,7 +19,8 @@ const dbConfig = new Sequelize(
                 min: 0,
                 acquire: 30000,
                 idle: 10000
-            }
+            },
+            query:{raw:true}
 });
 
 module.exports = dbConfig;
