@@ -8,7 +8,8 @@ const bookImage = (props) => {
   
   useEffect(() => {
     (async () => {
-      const response = await fetch(AppConst.API.BOOK + "?" + new URLSearchParams({type: "single", amazon_id : props.amazon_id}));
+      const query = new URLSearchParams({type: "single", amazon_id : props.bookParam.amazon_id});
+      const response = await fetch(`${AppConst.API.BOOK}?${query}`);
       const data = await response.json();
       setStored(Object.keys(data).length === 0 ? false: true);
     })();
@@ -16,13 +17,10 @@ const bookImage = (props) => {
 
   const onClickSaveButton = (save_f) => {
       (async () => {
-        const params = {
-          title     : props.title,
-          amazon_id : props.amazon_id,
-          image_url : props.image_url,
-          page      : props.page,
-        }
-        const response = await fetch(AppConst.API.BOOK + "?" + new URLSearchParams(params), {method : save_f ? "POST" : "DELETE"});
+        const response = await fetch(AppConst.API.BOOK, {
+            method : save_f ? "POST" : "DELETE",
+            body   : JSON.stringify(props.bookParam)
+          });
         const data = await response.json();
     })()
     setStored(save_f);
@@ -72,7 +70,7 @@ const bookImage = (props) => {
 
   return (
     <div className={classes.root}>
-      <img src={props.src} />
+      <img src={props.bookParam.image_url} />
       <Button
         {...button["button-props"]}
       >

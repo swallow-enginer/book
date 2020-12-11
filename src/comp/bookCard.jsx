@@ -38,7 +38,7 @@ const bookCard = (props) => {
   return (
     <Box>
       {/* 画像の表示 */}
-        <BookImage src={props.bookParam.image_url} amazon_id={props.bookParam.amazon_id}/>
+        <BookImage bookParam={props.bookParam}/>
       {/* タイトルの表示 */}
       <Typography>
         <Link {...compProps.showLink}>

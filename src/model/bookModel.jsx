@@ -8,6 +8,7 @@ const bookModel = DbConfig.define('book', {
   book_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
+    autoIncrement: true,
     comment: "本ID"
   },
   title: {

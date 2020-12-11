@@ -8,6 +8,7 @@ const readingBookModel = DbConfig.define('reading_book', {
   reading_book_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
+    autoIncrement: true,
     comment: "完読本ID"
   },
   book_id: {
@@ -28,6 +29,4 @@ const readingBookModel = DbConfig.define('reading_book', {
   freezeTableName: true,
 });
 
-readingBookModel.sync({force: true});
-
-export default bookModel;
+export default readingBookModel;

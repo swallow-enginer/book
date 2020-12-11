@@ -1,4 +1,5 @@
-import book from "@model/bookModel";
+import Book from "@model/bookModel";
+import ReadingBook from "@model/readingBookModel";
 import auth0 from "@auth/auth0";
 import DB from "@lib/dbConfig";
 
@@ -13,22 +14,42 @@ export default async (req, res) => {
     if (req.method === "GET") {
         //一覧取得
         if (req.query.type === "list") {
-            await setBookList(req, res, user);
+            await setBookList(req, res, user.user_id);
             return;
         
         //1冊の本を取得
         } else if (req.query.type === "single") {
-            await setBookSingle(req, res, user);
+            await setBookSingle(req, res, user.user_id);
             return;
         }
-        
+    //本の登録処理
     } else if (req.method === "POST") {
-        
+        await insertBook(req, res, user.user_id);
+        return;
     }
 }
 
+//本の登録
+const insertBook = async (req, res, user_id) => {
+    const params = await JSON.parse(req.body);
+
+    //本テーブルの登録
+    const [book] = await Book.findOrCreate({
+        where : {
+            amazon_id: params.amazon_id
+        },
+        defaults: params
+    });
+    //完読本テーブルの登録
+    const result = await ReadingBook.create({
+        book_id: book.book_id, 
+        user_id: user_id,
+    });
+    exeSuccess(res, result);
+}
+
 //1件の本を取得する
-const setBookSingle = async (req, res, user) => {
+const setBookSingle = async (req, res, user_id) => {
     const amazon_id = req.query.amazon_id;
     //amazonIDがない時
     if (!amazon_id) {exeSuccess(res, {});}
@@ -45,7 +66,7 @@ const setBookSingle = async (req, res, user) => {
                         AND book.amazon_id = ?
                     `,
                     {
-                        replacements: [user.user_id, amazon_id],
+                        replacements: [user_id, amazon_id],
                         type: DB.QueryTypes.SELECT,
                         plain: true,
                     });
@@ -54,7 +75,7 @@ const setBookSingle = async (req, res, user) => {
 }
 
 //本のリストを取得する
-const setBookList = async (req, res, user) => {
+const setBookList = async (req, res, user_id) => {
     const PAGE_NUM = 10;    //1ページに表示する個数
     const page = !req.query || !req.query.page ? 1: req.query.page;  //ページ番号
 
@@ -72,7 +93,7 @@ const setBookList = async (req, res, user) => {
             ORDER BY reading_book.create_dtt DESC
             OFFSET ? LIMIT ?
     `,{
-        replacements: [user.user_id, PAGE_NUM, PAGE_NUM * page],
+        replacements: [user_id, PAGE_NUM, PAGE_NUM * page],
         type: DB.QueryTypes.SELECT,
     });
 
