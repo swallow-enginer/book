@@ -10,7 +10,7 @@ const bookModel = DbConfig.define('book', {
     primaryKey: true,
     comment: "本ID"
   },
-  book_title: {
+  title: {
     type: Sequelize.STRING(500),
     allowNull:false,
     comment: "タイトル"
@@ -29,16 +29,6 @@ const bookModel = DbConfig.define('book', {
     type: Sequelize.INTEGER,
     allowNull:false,
     comment: "ページ数"
-  },
-  user_id: {
-    type: Sequelize.INTEGER,
-    allowNull:false,
-    comment: "ユーザーID"
-  },
-  create_dtt: {
-    type: Sequelize.DATE,
-    defaultValue: Sequelize.literal("current_timestamp"),
-    comment: "作成日時"
   },
 }, {
   freezeTableName: true,

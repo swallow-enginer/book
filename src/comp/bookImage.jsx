@@ -17,7 +17,7 @@ const bookImage = (props) => {
   const onClickSaveButton = (save_f) => {
       (async () => {
         const params = {
-          book_title: props.book_title,
+          title     : props.title,
           amazon_id : props.amazon_id,
           image_url : props.image_url,
           page      : props.page,

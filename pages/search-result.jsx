@@ -41,7 +41,7 @@ export default function SearchResult(props) {
   const bookList = props.bookList.items.map(item => item.volumeInfo).filter(item => !!item.pageCount).map(((item) => {
     return {
       title : item.title,                             //タイトル
-      image : item.imageLinks.smallThumbnail,         //画像URL
+      image_url : item.imageLinks.smallThumbnail,     //画像URL
       page : item.pageCount,                          //ページ数
     }
   }));

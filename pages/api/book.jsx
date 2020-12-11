@@ -1,5 +1,6 @@
 import book from "@model/bookModel";
 import auth0 from "@auth/auth0";
+import DB from "@lib/dbConfig";
 
 export default async (req, res) => {
     //ユーザー情報の取得
@@ -31,9 +32,23 @@ const setBookSingle = async (req, res, user) => {
     const amazon_id = req.query.amazon_id;
     //amazonIDがない時
     if (!amazon_id) {exeSuccess(res, {});}
-
-    const data = await book.findOne({where : {user_id : user.user_id, amazon_id : amazon_id}})
-    
+    const data = await DB.query(`
+                    SELECT 
+                        book.title,
+                        book.image_url,
+                        book.page,
+                        book.amazon_id
+                    FROM book
+                    INNER JOIN reading_book
+                        ON book.book_id = reading_book.book_id
+                    WHERE reading_book.user_id = ?
+                        AND book.amazon_id = ?
+                    `,
+                    {
+                        replacements: [user.user_id, amazon_id],
+                        type: DB.QueryTypes.SELECT,
+                        plain: true,
+                    });
     //処理成功
     exeSuccess(res, data ? data: {});
 }
@@ -44,17 +59,25 @@ const setBookList = async (req, res, user) => {
     const page = !req.query || !req.query.page ? 1: req.query.page;  //ページ番号
 
     //ユーザーに登録されている本を全て取得
-    const book_list = await book.findAll({
-        where : {user_id : user.user_id},    //ユーザーIDで絞る
-        order: [
-            ['create_dtt', 'DESC']          //作成日時でソート
-        ],
-        limit: PAGE_NUM,                    //1ページ毎のアイテム数
-        offset: PAGE_NUM * page             //ページ番号の数
+    const data = await DB.query(`
+            SELECT 
+                book.title,
+                book.image_url,
+                book.page,
+                book.amazon_id
+            FROM book
+            INNER JOIN reading_book
+                ON book.book_id = reading_book.book_id
+            WHERE reading_book.user_id = ?
+            ORDER BY reading_book.create_dtt DESC
+            OFFSET ? LIMIT ?
+    `,{
+        replacements: [user.user_id, PAGE_NUM, PAGE_NUM * page],
+        type: DB.QueryTypes.SELECT,
     });
 
     //処理成功
-    exeSuccess(res, book_list);
+    exeSuccess(res, data);
 }
 
 //処理成功時の処理

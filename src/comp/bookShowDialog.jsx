@@ -75,7 +75,7 @@ const bookShowDialog = (props) => {
         <DialogTitle>{props.bookParam.title}</DialogTitle>
 
         <DialogContent {...compProps.dialogContent}>
-          <img src={props.bookParam.image} />
+          <img src={props.bookParam.image_url} />
 
           <DialogContentText {...compProps.dialogContentText}>
             <Typography>{props.bookParam.page}ページ</Typography>
