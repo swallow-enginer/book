@@ -3,6 +3,8 @@ import ReadingBook from "@model/readingBookModel";
 import auth0 from "@auth/auth0";
 import DB from "@lib/dbConfig";
 
+//book_IDに変更
+
 export default async (req, res) => {
     //ユーザー情報の取得
     const user = await getUser(req, res);
@@ -26,7 +28,22 @@ export default async (req, res) => {
     } else if (req.method === "POST") {
         await insertBook(req, res, user.user_id);
         return;
+    //本の削除処理
+    } else if (req.method === "DELETE") {
+        await deleteBook(req, res);
+        return;
     }
+}
+
+//本の削除処理
+const deleteBook = async (req, res) => {
+    const params = await JSON.parse(req.body);
+    const reading_book = await ReadingBook.findOne({where: {book_id: params.book_id}});
+    await ReadingBook.destroy({where: {reading_book_id: reading_book.reading_book_id}});
+    await Book.destroy({where: {book_id: reading_book.book_id, amazon_id: null}})
+
+
+    exeSuccess(res, reading_book);
 }
 
 //本の登録
@@ -41,11 +58,18 @@ const insertBook = async (req, res, user_id) => {
         defaults: params
     });
     //完読本テーブルの登録
-    const result = await ReadingBook.create({
-        book_id: book.book_id, 
-        user_id: user_id,
+    const result = await ReadingBook.findOrCreate({
+        where : {
+            book_id: book.book_id,
+            user_id: user_id,
+        },
+        defaults: {
+            book_id: book.book_id,
+            user_id: user_id,
+        }
+
     });
-    exeSuccess(res, result);
+    exeSuccess(res, book);
 }
 
 //1件の本を取得する
@@ -58,7 +82,8 @@ const setBookSingle = async (req, res, user_id) => {
                         book.title,
                         book.image_url,
                         book.page,
-                        book.amazon_id
+                        book.amazon_id,
+                        book.book_id
                     FROM book
                     INNER JOIN reading_book
                         ON book.book_id = reading_book.book_id
@@ -77,7 +102,7 @@ const setBookSingle = async (req, res, user_id) => {
 //本のリストを取得する
 const setBookList = async (req, res, user_id) => {
     const PAGE_NUM = 10;    //1ページに表示する個数
-    const page = !req.query || !req.query.page ? 1: req.query.page;  //ページ番号
+    const page = !req.query || !req.query.page ? 0: req.query.page - 1;  //ページ番号
 
     //ユーザーに登録されている本を全て取得
     const data = await DB.query(`
@@ -85,7 +110,8 @@ const setBookList = async (req, res, user_id) => {
                 book.title,
                 book.image_url,
                 book.page,
-                book.amazon_id
+                book.amazon_id,
+                book.book_id
             FROM book
             INNER JOIN reading_book
                 ON book.book_id = reading_book.book_id
@@ -93,9 +119,10 @@ const setBookList = async (req, res, user_id) => {
             ORDER BY reading_book.create_dtt DESC
             OFFSET ? LIMIT ?
     `,{
-        replacements: [user_id, PAGE_NUM, PAGE_NUM * page],
+        replacements: [user_id, PAGE_NUM * page, PAGE_NUM],
         type: DB.QueryTypes.SELECT,
-    });
+    }); 
+    console.log(data)
 
     //処理成功
     exeSuccess(res, data);

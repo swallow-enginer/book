@@ -5,23 +5,38 @@ import AppConst from "@lib/appConst";
 
 const bookImage = (props) => {
   const [stored, setStored] = useState(false);
+  const [book_id, setBookId] = useState();
   
   useEffect(() => {
     (async () => {
       const query = new URLSearchParams({type: "single", amazon_id : props.bookParam.amazon_id});
       const response = await fetch(`${AppConst.API.BOOK}?${query}`);
       const data = await response.json();
-      setStored(Object.keys(data).length === 0 ? false: true);
+      //未登録
+      if (Object.keys(data).length === 0) {
+        setStored(false)
+        setBookId()
+      //登録済み
+      } else {
+        setStored(true)
+        setBookId(data.book_id)
+      }
+      
     })();
   }, []);
 
   const onClickSaveButton = (save_f) => {
       (async () => {
+        const params = {...props.bookParam, book_id : book_id};
+        //登録もしくは削除処理
         const response = await fetch(AppConst.API.BOOK, {
             method : save_f ? "POST" : "DELETE",
-            body   : JSON.stringify(props.bookParam)
+            body   : JSON.stringify(params)
           });
         const data = await response.json();
+        //book_idの更新処理
+        if (save_f) {setBookId(data.book_id)} 
+        else {setBookId()}
     })()
     setStored(save_f);
   };

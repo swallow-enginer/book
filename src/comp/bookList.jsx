@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MenuListComposition(props) {
   const classes = useStyles();
+
   //各グリッドのパラメータ
   const compProps = {
     gridItem: {

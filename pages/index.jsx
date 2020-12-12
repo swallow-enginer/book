@@ -10,7 +10,8 @@ import { useEffect, useState } from "react";
 const index = function Index(props) {
 
   //本のリスト
-  const [book_lists, setBookList] = useState();  
+  const [bookList, setBookList] = useState([]);
+  const router = useRouter();
 
   //レンダリング時の処理
   useEffect(() => {
@@ -20,28 +21,6 @@ const index = function Index(props) {
       setBookList(data);
     })();
   },[]);
-
-  const router = useRouter();
-  const bookList = [
-    {
-      title: "aaa",
-      image_url: "http://books.google.com/books/content?id=ghgzDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
-      page : 200,
-      amazon_id: "aaa"
-    },
-    {
-      title: "aaa",
-      image_url: "http://books.google.com/books/content?id=ghgzDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
-      page : 200,
-      amazon_id: "aaa"
-    },
-    {
-      title: "aaa",
-      image_url: "http://books.google.com/books/content?id=ghgzDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
-      page : 200,
-      amazon_id: "aaa"
-    },
-  ];
 
   /**
    * テンプレート追加

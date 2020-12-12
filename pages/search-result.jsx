@@ -3,7 +3,7 @@ import BookList from "@comp/bookList";
 import { useRouter } from 'next/router';
 import AppConst from "@lib/appConst";
 import Box from '@material-ui/core/Box';
-import React, {useEffect } from 'react';
+import React from 'react';
 
 export async function getServerSideProps(context) {
   const keyword = context.query.keyword;  //検索キーワード
@@ -38,11 +38,12 @@ export default function SearchResult(props) {
   const router = useRouter();
 
   //AMAZONブックのデータを整形した結果
-  const bookList = props.bookList.items.map(item => item.volumeInfo).filter(item => !!item.pageCount).map(((item) => {
+  const bookList = props.bookList.items.map(item => {return {...item.volumeInfo, amazon_id : item.id}}).filter(item => !!item.pageCount).map(((item) => {
     return {
       title : item.title,                             //タイトル
       image_url : item.imageLinks.smallThumbnail,     //画像URL
       page : item.pageCount,                          //ページ数
+      amazon_id : item.amazon_id,                     //amazonのID
     }
   }));
 
