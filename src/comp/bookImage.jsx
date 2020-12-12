@@ -9,8 +9,8 @@ const bookImage = (props) => {
   
   useEffect(() => {
     (async () => {
-      const query = new URLSearchParams({type: "single", amazon_id : props.bookParam.amazon_id});
-      const response = await fetch(`${AppConst.API.BOOK}?${query}`);
+      const params = {type: "single", amazon_id : props.bookParam.amazon_id, book_id :props.bookParam.book_id}
+      const response = await fetch(`${AppConst.API.BOOK}?${new URLSearchParams(params)}`);
       const data = await response.json();
       //未登録
       if (Object.keys(data).length === 0) {
@@ -85,7 +85,7 @@ const bookImage = (props) => {
 
   return (
     <div className={classes.root}>
-      <img src={props.bookParam.image_url} />
+      <img src={props.bookParam.image_url ? props.bookParam.image_url: "/no_image.jpg"} />
       <Button
         {...button["button-props"]}
       >

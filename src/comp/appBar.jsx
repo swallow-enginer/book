@@ -40,8 +40,14 @@ export default function ButtonAppBar(props) {
   const router = useRouter();
 
   /** カテゴリーの登録処理 */
-  const handleSaveBook = () => {
-    setPageProps({...pageProps, bookEntryDialogOpen: false})
+  const handleSaveBook = (book) => {
+    (async (book) => {
+      const params = {
+        method : "POST",
+        body : JSON.stringify(book)}
+        await (await fetch(appConst.API.BOOK, params)).json();
+    })(book);
+    setPageProps({...pageProps, bookEntryDialogOpen: false});
   }
 
   /** 画面パラメータ */

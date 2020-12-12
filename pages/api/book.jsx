@@ -49,14 +49,8 @@ const deleteBook = async (req, res) => {
 //本の登録
 const insertBook = async (req, res, user_id) => {
     const params = await JSON.parse(req.body);
+    const book = await findOrCreateBook(params, params.amazon_id);
 
-    //本テーブルの登録
-    const [book] = await Book.findOrCreate({
-        where : {
-            amazon_id: params.amazon_id
-        },
-        defaults: params
-    });
     //完読本テーブルの登録
     const result = await ReadingBook.findOrCreate({
         where : {
@@ -72,11 +66,27 @@ const insertBook = async (req, res, user_id) => {
     exeSuccess(res, book);
 }
 
+const findOrCreateBook = async (params, amazon_id) => {
+    let book;
+    if (amazon_id) {
+        //本テーブルの登録
+        [book] = await Book.findOrCreate({
+            where : {
+                amazon_id: amazon_id
+        },
+            defaults: params
+        });
+        console.log(book)
+    } else {
+        book = await (await Book.create(params)).dataValues;
+    }
+    return book;
+}
+
 //1件の本を取得する
 const setBookSingle = async (req, res, user_id) => {
     const amazon_id = req.query.amazon_id;
-    //amazonIDがない時
-    if (!amazon_id) {exeSuccess(res, {});}
+    const book_id   = req.query.book_id;
     const data = await DB.query(`
                     SELECT 
                         book.title,
@@ -88,10 +98,10 @@ const setBookSingle = async (req, res, user_id) => {
                     INNER JOIN reading_book
                         ON book.book_id = reading_book.book_id
                     WHERE reading_book.user_id = ?
-                        AND book.amazon_id = ?
+                        AND ${book_id === "undefined"?"book.amazon_id = ?": "book.book_id = ?"}
                     `,
                     {
-                        replacements: [user_id, amazon_id],
+                        replacements: [user_id, book_id === "undefined"?amazon_id: book_id],
                         type: DB.QueryTypes.SELECT,
                         plain: true,
                     });

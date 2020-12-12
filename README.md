@@ -1,3 +1,7 @@
+残タスク
+- ページ数の合算
+- 検索画面からホームに戻る
+- ログインボタン・ログアウトボタン
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

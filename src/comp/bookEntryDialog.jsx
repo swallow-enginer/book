@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
 const bookEntryDialog = (props) => {
   const classes = useStyles();
   const [book, setBook] = useState({
-    bookNm: null,
-    bookPage: null,
+    title: null,
+    page: null,
   });
 
   /** ページプロパティ */
@@ -28,7 +28,7 @@ const bookEntryDialog = (props) => {
     parentBookList: [
       {
         bookId: 0,
-        bookNm: "テスト"
+        title: "テスト"
       }
     ]
   }
@@ -53,34 +53,34 @@ const bookEntryDialog = (props) => {
     saveButton: {
       onClick: () => props.onSave(book),
       color: "primary",
-      disabled: !book.bookNm 
-                  || !book.bookPage 
-                  || !isFinite(book.bookPage) 
-                  || 0 >= Number(book.bookPage) 
-                  || !Number.isInteger(Number(book.bookPage))
+      disabled: !book.title 
+                  || !book.page 
+                  || !isFinite(book.page) 
+                  || 0 >= Number(book.page) 
+                  || !Number.isInteger(Number(book.page))
     },
     cancelButton: {
       onClick: handleBookEntryDialogClose,
       color: "primary"
     },
-    bookNm: {
+    title: {
       label: "タイトル",
       variant: "outlined",
       fullWidth: true,
-      value: book.bookNm,
-      onChange: (e) => setBook({...book, bookNm: e.target.value}),
+      value: book.title,
+      onChange: (e) => setBook({...book, title: e.target.value}),
       helperText:pageProps.errorMessage,
       error: pageProps.errorMessage,
     },
     parentBook: {
       label: "ページ数",
-      value: book.bookPage,
+      value: book.page,
       variant: "outlined",
       className: classes.parentButton,
       fullWidth: true,
       size:"small",
       error: pageProps.errorMessage,
-      onChange: (e) => setBook({...book, bookPage: e.target.value})
+      onChange: (e) => setBook({...book, page: e.target.value})
     },
   }
 
@@ -89,7 +89,7 @@ const bookEntryDialog = (props) => {
         <DialogTitle>本の登録</DialogTitle>
         <DialogContent {...compProps.dialogContent}>
           <DialogContentText {...compProps.dialogContentText}>
-            <TextField {...compProps.bookNm} />
+            <TextField {...compProps.title} />
             <TextField {...compProps.parentBook} />
           </DialogContentText>
         </DialogContent>
