@@ -11,14 +11,18 @@ const index = function Index(props) {
 
   //本のリスト
   const [bookList, setBookList] = useState([]);
+  const [page, setPage] = useState(0);
   const router = useRouter();
 
   //レンダリング時の処理
   useEffect(() => {
+    
     (async () => {
-      const response = await fetch(AppConst.API.BOOK + "?" + new URLSearchParams({type: "list"}));
-      const data = await response.json();
-      setBookList(data);
+      //本の一覧を取得
+      setBookList(await (await fetch(AppConst.API.BOOK + "?" + new URLSearchParams({type: "list"}))).json());
+
+      //ページ総数の取得
+      setPage(Number((await (await fetch(AppConst.API.USER + "?" + new URLSearchParams({type: "page"}))).json()).page))
     })();
   },[]);
 
@@ -35,7 +39,10 @@ const index = function Index(props) {
           <Box display="flex" alignItems="center">
             <h2>完読状況</h2>
           </Box>
-          <Typography>現在の積み上げ：200mm(60ページ)</Typography>
+          <Typography>{`現在のページ数：${page.toLocaleString()}ページ`}</Typography>
+          <Typography>{`現在の高さ：${(Math.ceil(0.15 * page)).toLocaleString()}mm`}</Typography>
+          <Typography>{`現在の重さ：${(Math.ceil(0.5 * page)).toLocaleString()}g`}</Typography>
+          
           <Typography>広辞苑まで：100mm(50ページ)</Typography>
           <BookList 
             bookList={bookList}

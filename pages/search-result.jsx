@@ -29,7 +29,7 @@ export async function getServerSideProps(context) {
 }
 
 const setRedirect = (res) => {
-  res.setHeader("location", "/");
+  res.setHeader("location", `/?${new URLSearchParams({message : "該当データがありません。"})}`);
   res.statusCode = 302;
   res.end();
 }

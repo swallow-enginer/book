@@ -21,6 +21,7 @@ export default Object.freeze({
     TEMPLATE :"/api/template",
     CATEGORY :"/api/category",
     BOOK : "/api/book",
+    USER : "/api/user",
   },
   
   /** テンプレート一覧の並び順 */

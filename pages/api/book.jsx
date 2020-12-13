@@ -76,7 +76,6 @@ const findOrCreateBook = async (params, amazon_id) => {
         },
             defaults: params
         });
-        console.log(book)
     } else {
         book = await (await Book.create(params)).dataValues;
     }
@@ -132,7 +131,6 @@ const setBookList = async (req, res, user_id) => {
         replacements: [user_id, PAGE_NUM * page, PAGE_NUM],
         type: DB.QueryTypes.SELECT,
     }); 
-    console.log(data)
 
     //処理成功
     exeSuccess(res, data);
