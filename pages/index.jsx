@@ -6,6 +6,8 @@ import Box from '@material-ui/core/Box';
 import BookList from "@comp/bookList";
 import withAuth from "@auth/with-auth"
 import { useEffect, useState } from "react";
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 const index = function Index(props) {
 
@@ -13,10 +15,14 @@ const index = function Index(props) {
   const [bookList, setBookList] = useState([]);
   const [page, setPage] = useState(0);
   const router = useRouter();
+  const [toast, setToast] = useState({open:false});
 
   //レンダリング時の処理
   useEffect(() => {
-    
+    //トーストの表示
+    if(router.query.message) {
+      setToast({open : true, message:router.query.message})
+    }
     (async () => {
       //本の一覧を取得
       setBookList(await (await fetch(AppConst.API.BOOK + "?" + new URLSearchParams({type: "list"}))).json());
@@ -25,6 +31,10 @@ const index = function Index(props) {
       setPage(Number((await (await fetch(AppConst.API.USER + "?" + new URLSearchParams({type: "page"}))).json()).page))
     })();
   },[]);
+
+  const handleClose = () => {
+    setToast({open:false})
+  }
 
   /**
    * テンプレート追加
@@ -47,7 +57,12 @@ const index = function Index(props) {
           <BookList 
             bookList={bookList}
             title="最近の記録"/>
-      </Box>
+        </Box>
+        
+        {/* メッセージ表示 */}
+        <Snackbar open={toast.open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal:"center" }}>
+          <Alert onClose={handleClose} severity="error">{toast.message}</Alert>
+      </Snackbar>
     </>
   )
 }
