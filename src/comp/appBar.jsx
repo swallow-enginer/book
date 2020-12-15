@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import BookEntryDialog from '@comp/BookEntryDialog'
 import SearchBar from '@comp/searchBar'
 import Link from '@material-ui/core/Link';
+import SideBarDrawer from "@comp/sideBarDrawer"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,6 +54,7 @@ export default function ButtonAppBar(props) {
   /** 画面パラメータ */
   const [pageProps, setPageProps] = useState({
     bookEntryDialogOpen: false,
+    sideBarDrawerOpen: false,
   });
 
   /**
@@ -88,6 +90,7 @@ export default function ButtonAppBar(props) {
       className  : classes.menuButton,
       color      : "inherit",
       "aria-label"  : "menu",
+      onClick   : () => setPageProps({...pageProps, sideBarDrawerOpen:true}),
       
     },
     headerButton : {
@@ -138,7 +141,10 @@ export default function ButtonAppBar(props) {
               <AddIcon />本追加
             </Button>
           </Box>
+          {/* 本登録ダイアログ */}
           <BookEntryDialog {...compProps.bookEntryDialog} />
+          {/* ドロワー */}
+          <SideBarDrawer open={pageProps.sideBarDrawerOpen} setPageProps={setPageProps}/>
       </>
     )
   }

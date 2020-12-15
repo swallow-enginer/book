@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import BookList from "@comp/bookList";
 import withAuth from "@auth/with-auth"
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
@@ -14,11 +14,11 @@ const index = function Index(props) {
   //本のリスト
   const [bookList, setBookList] = useState([]);
   const [page, setPage] = useState(0);
-  const router = useRouter();
   const [toast, setToast] = useState({open:false});
+  const router = useRouter();
 
   //レンダリング時の処理
-  useEffect(() => {
+  useLayoutEffect (() => {
     //トーストの表示
     if(router.query.message) {
       setToast({open : true, message:router.query.message})
