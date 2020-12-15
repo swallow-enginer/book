@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import AppConst from "@lib/appConst";
 
 const bookImage = (props) => {
-  const [stored, setStored] = useState(false);
+  const [stored, setStored] = useState();
   const [book_id, setBookId] = useState();
   
   useEffect(() => {
@@ -86,11 +86,11 @@ const bookImage = (props) => {
   return (
     <div className={classes.root}>
       <img src={props.bookParam.image_url ? props.bookParam.image_url: "/no_image.jpg"} />
-      <Button
-        {...button["button-props"]}
-      >
+      {(stored === false || stored) &&
+      <Button {...button["button-props"]}>
         {button["button-text"]}
       </Button>
+}
     </div>
   );
 }

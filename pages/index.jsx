@@ -18,7 +18,7 @@ const index = function Index(props) {
   const router = useRouter();
 
   //レンダリング時の処理
-  useLayoutEffect (() => {
+  useEffect (() => {
     //トーストの表示
     if(router.query.message) {
       setToast({open : true, message:router.query.message})
