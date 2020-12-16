@@ -38,7 +38,13 @@ export default function SearchResult(props) {
   const router = useRouter();
 
   //AMAZONブックのデータを整形した結果
-  const bookList = props.bookList.items.map(item => {return {...item.volumeInfo, amazon_id : item.id}}).filter(item => !!item.pageCount).map(((item) => {
+  const bookList = props.bookList.items
+                      //amazonIDの追加
+                      .map(item => {return {...item.volumeInfo, amazon_id : item.id}})
+                      //対象の項目が抜けている場合、対象外
+                      .filter(item => item.pageCount && (item.imageLinks && item.imageLinks.smallThumbnail) && item.title)
+                      //抜き出す項目
+                      .map(((item) => {
     return {
       title : item.title,                             //タイトル
       image_url : item.imageLinks.smallThumbnail,     //画像URL
@@ -47,15 +53,9 @@ export default function SearchResult(props) {
     }
   }));
 
-  /**
-   * テンプレート追加
-   */
-  const addTemplate = () => {
-    router.push(AppConst.URL.TEMPLATE_INPUT)
-  }
   return (
     <>
-      <AppBar onButtonClick={addTemplate}/>
+      <AppBar/>
       <Box mx={10} mt={4}>
         <BookList 
           bookList={bookList}

@@ -78,7 +78,9 @@ const bookImage = (props) => {
       },
 
       "& img" : {
-        width: "100%"
+        width: "180px",
+        height: "270px",
+        objectFit: "cover",
       }
     }
   }));

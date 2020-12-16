@@ -19,16 +19,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   title: {
     flexGrow: 1,
-    marginLeft: theme.spacing(2),
+    minWidth: "90px",
   },
   headerButton: {
       borderRadius: "10px 10px 10px 10px",
       backgroundColor: "white",
+      minWidth: "90px",
       '&:hover': { background: "rgba(255, 255, 255, 0.94)" }
   },
   homeIcon : {
