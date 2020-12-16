@@ -68,6 +68,7 @@ const bookImage = (props) => {
     root: {
       position: "relative",
       maxWidth: "180px",
+      margin: "0 auto",
 
       "& Button": {
         position: "absolute",

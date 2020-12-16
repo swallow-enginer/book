@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -9,9 +10,16 @@ import PropTypes from 'prop-types';
 import { makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+  dialog: {
+    width: "400px"
+  },
   parentButton: {
     marginTop: theme.spacing(4)
-  }}));
+  },
+  bookImage: {
+    textAlign: "center"
+  },
+  }));
 
 
 const bookShowDialog = (props) => {
@@ -34,6 +42,9 @@ const bookShowDialog = (props) => {
       open: props.open,
       onClose: handleBookEntryDialogClose,
       scroll:'paper',
+      classes: {
+        paper: classes.dialog
+      }
     },
     dialogContent: {
       dividers: true
@@ -66,6 +77,9 @@ const bookShowDialog = (props) => {
       size:"small",
       onChange: (e) => setBook({...book, bookPage: e.target.value})
     },
+    bookImage: {
+      className: classes.bookImage,
+    }
   }
 
   return (
@@ -75,7 +89,9 @@ const bookShowDialog = (props) => {
         <DialogTitle>{props.bookParam.title}</DialogTitle>
 
         <DialogContent {...compProps.dialogContent}>
-          <img src={props.bookParam.image_url} />
+          <Box {...compProps.bookImage}>
+            <img src={props.bookParam.image_url} />
+          </Box>
 
           <DialogContentText {...compProps.dialogContentText}>
             <Typography>{props.bookParam.page}ページ</Typography>

@@ -52,8 +52,6 @@ const index = function Index(props) {
           <Typography>{`現在のページ数：${page.toLocaleString()}ページ`}</Typography>
           <Typography>{`現在の高さ：${(Math.ceil(0.15 * page)).toLocaleString()}mm`}</Typography>
           <Typography>{`現在の重さ：${(Math.ceil(0.5 * page)).toLocaleString()}g`}</Typography>
-          
-          <Typography>広辞苑まで：100mm(50ページ)</Typography>
           <BookList 
             bookList={bookList}
             title="最近の記録"/>

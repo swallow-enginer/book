@@ -1,11 +1,19 @@
 import React, {useState} from 'react';
-import BookEntryDialog  from "@comp/bookShowDialog";
+import BookShowDialog  from "@comp/bookShowDialog";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import BookImage from "@comp/bookImage";
+import { makeStyles } from '@material-ui/core';
 
 const bookCard = (props) => {
+  const useStyles = makeStyles((theme) => ({
+    title: {
+      marginLeft: "50px",
+      marginRight: "50px",
+    }
+  }));
+  const classes = useStyles();
 
     /** 画面パラメータ */
     const [pageProps, setPageProps] = useState({
@@ -32,26 +40,32 @@ const bookCard = (props) => {
     showLink: {
       href: "#",
       onClick: () => setPageProps({...pageProps, bookShowDialogOpen: true})
+    },
+    title: {
+      className: classes.title
     }
   }
 
   return (
     <Box>
       {/* 画像の表示 */}
-        <BookImage bookParam={props.bookParam}/>
-      {/* タイトルの表示 */}
-      <Typography>
-        <Link {...compProps.showLink}>
-        {props.bookParam.title}
-        </Link>
-      </Typography>
+      <BookImage bookParam={props.bookParam}/>
 
-      {/* ページ数 */}
-      <Typography>{props.bookParam.page}ページ</Typography>
+      <Box {...compProps.title}>
+        {/* タイトルの表示 */}
+        <Typography>
+          <Link {...compProps.showLink}>
+          {props.bookParam.title}
+          </Link>
+        </Typography>
+
+        {/* ページ数 */}
+        <Typography>{props.bookParam.page}ページ</Typography>
+      </Box>
 
 
       {/* ダイアログ */}
-      <BookEntryDialog {...compProps.bookShowDialog} />
+      <BookShowDialog {...compProps.bookShowDialog} />
     </Box>
   );
 }
