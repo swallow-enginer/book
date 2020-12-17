@@ -1,19 +1,20 @@
 import AppBar from "@comp/appBar";
 import BookList from "@comp/bookList";
-import { useRouter } from 'next/router';
 import AppConst from "@lib/appConst";
 import Box from '@material-ui/core/Box';
 import React from 'react';
 
 export async function getServerSideProps(context) {
-  const keyword = context.query.keyword;  //検索キーワード
-
+  //検索キーワード
+  const keyword = context.query.keyword;
+  
+  //キーワードが無ければホーム画面にリダイレクト
   if (!keyword) {
     setRedirect(context.res);
     return;
   }
 
-  const response = await fetch (encodeURI(`${AppConst.URL.AMAZON_BOOK}?q=${keyword}`));
+  const response = await fetch (encodeURI(`${AppConst.API.AMAZON_BOOK}?q=${keyword}`));
   const bookList = await response.json()
   if (bookList.totalItems == 0) {
     setRedirect(context.res);
@@ -28,14 +29,14 @@ export async function getServerSideProps(context) {
   }
 }
 
+//リダイレクト処理
 const setRedirect = (res) => {
-  res.setHeader("location", `/?${new URLSearchParams({message : "該当データがありません。"})}`);
-  res.statusCode = 302;
+  res.setHeader("location", `/?${new URLSearchParams({message : AppConst.ERROR_MESSAGE.NOT_FOUND_DATA})}`);
+  res.statusCode = AppConst.HTTP_STATUS_CODE.REDIRECT;
   res.end();
 }
 
 export default function SearchResult(props) {
-  const router = useRouter();
 
   //AMAZONブックのデータを整形した結果
   const bookList = props.bookList.items
@@ -57,7 +58,7 @@ export default function SearchResult(props) {
     <>
       <AppBar/>
       <Box mx={10} mt={4}>
-        <BookList 
+        <BookList
           bookList={bookList}
           title={`「${props.query}」の検索結果`}/>
       </Box>

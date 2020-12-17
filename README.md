@@ -2,6 +2,12 @@
 - 検索画面からホームに戻る
 - ログインボタン・ログアウトボタン
 - 保存済みの初期表示
+- ソーター
+- 無限読み込み
+- 更新処理
+- 検索画面の認証画面化
+- propTypes
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

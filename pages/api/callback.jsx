@@ -1,6 +1,5 @@
 import auth0 from '@auth/auth0';
 import User from "@model/userModel";
-// import DBConnect from "@lib/dbConfig";
 
 export default async function callback(req, res) {
   try {
@@ -8,7 +7,8 @@ export default async function callback(req, res) {
       onUserLoaded: async (req, res, session, state) => {
         //サブからユーザー情報を取得
         let user_info = await User.findOne({where: { sub_id: session.user.sub}});
-
+        
+        //ユーザーが登録されていなければ登録
         if (!user_info) {
           user_info = await insertUser(session.user.sub)
         }
@@ -28,18 +28,10 @@ export default async function callback(req, res) {
     res.status(error.status || 500).end(error.message);
   }
 }
-
+//ユーザー情報の登録
 const insertUser = async (sub_id) => {
-  //ユーザーIDの採番値の取得
-  // const user_id = getNextUserId();
-  //ユーザー情報の登録
   const data = await User.create({
     sub_id :sub_id
   });
   return await data.dataValues;
-}
-
-const getNextUserId = async () => {
-  const user = DBConnect.query("SELECT (MAX(user_id) + 1) AS user_id FROM users", { type: QueryTypes.SELECT, plain: true});
-  return user.user_id;
 }

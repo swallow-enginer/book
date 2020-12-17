@@ -7,8 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AddIcon from '@material-ui/icons/Add';
 import Box from '@material-ui/core/Box';
-import React, {useState} from 'react';
-import appConst from "@lib/appConst";
+import React, { useState } from 'react';
+import AppConst from "@lib/appConst";
 import { useRouter } from 'next/router';
 import BookEntryDialog from '@comp/BookEntryDialog'
 import SearchBar from '@comp/searchBar'
@@ -19,139 +19,140 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  title: {
+
+  //ヘッダータイトル
+  headerTitle: {
     flexGrow: 1,
     minWidth: "90px",
   },
+
+  //本追加ボタン
   headerButton: {
-      borderRadius: "10px 10px 10px 10px",
-      backgroundColor: "white",
-      minWidth: "90px",
-      '&:hover': { background: "rgba(255, 255, 255, 0.94)" }
+    borderRadius: "10px 10px 10px 10px",
+    backgroundColor: "white",
+    minWidth: "90px",
+    '&:hover': { background: "rgba(255, 255, 255, 0.94)" }
   },
-  homeIcon : {
+
+  //ホームリンク
+  homeLink: {
     '&:hover': { cursor: "pointer" }
   }
 }));
 
-export default function ButtonAppBar(props) {
+export default function ButtonAppBar() {
   const classes = useStyles();
   const router = useRouter();
+
+  /** 画面パラメータ */
+  const [pageProps, setPageProps] = useState({
+    bookEntryDialogOpen: false,   //ダイアログの表示・非表示
+    sideBarDrawerOpen: false,     //サイドバーの表示・非表示
+  });
 
   /** カテゴリーの登録処理 */
   const handleSaveBook = (book) => {
     (async (book) => {
       const params = {
-        method : "POST",
-        body : JSON.stringify(book)}
-        await (await fetch(appConst.API.BOOK, params)).json();
+        method: AppConst.HTTP_METHOD.POST,
+        body: JSON.stringify(book)
+      }
+      await (await fetch(AppConst.API.BOOK, params)).json();
     })(book);
-    setPageProps({...pageProps, bookEntryDialogOpen: false});
+    //ダイアログのクローズ
+    setPageProps({ ...pageProps, bookEntryDialogOpen: false });
   }
-
-  /** 画面パラメータ */
-  const [pageProps, setPageProps] = useState({
-    bookEntryDialogOpen: false,
-    sideBarDrawerOpen: false,
-  });
-
-  /**
-   * 
-   */
-  const getAppBar = () => {
-    const href = router.pathname;
-    
-    switch (href) {
-      //ホーム画面
-      case appConst.URL.INDEX:
-      case  appConst.URL.SEARCH_RESULT:
-        return getHomeAppBar();
-    }
-  }
-
-  /**
-   * 
-   * @param {object} e イベント
-   */
-  const search = (e) => {
+  
+  //検索処理
+  const handleSearch = (e) => {
     //Enterボタン以外
     if (e.keyCode !== 13 || !e.target.value) {
       return;
     }
-    
-    router.push(appConst.URL.SEARCH_RESULT)
+
+    router.push(AppConst.URL.SEARCH_RESULT)
   }
 
   const compProps = {
+    //メニューアイコン
     iconButton: {
-      edge       : "start",
-      className  : classes.menuButton,
-      color      : "inherit",
-      "aria-label"  : "menu",
-      onClick   : () => setPageProps({...pageProps, sideBarDrawerOpen:true}),
-      
+      edge: "start",
+      className: classes.menuButton,
+      color: "inherit",
+      "aria-label": "menu",
+      onClick: () => setPageProps({ ...pageProps, sideBarDrawerOpen: true }),
+
     },
-    headerButton : {
-      className  : classes.headerButton,
-      color      : "primary",
-      onClick    : () => setPageProps({...pageProps, bookEntryDialogOpen: true}),
+
+    //本追加ボタン
+    headerButton: {
+      className: classes.headerButton,
+      color: "primary",
+      onClick: () => setPageProps({ ...pageProps, bookEntryDialogOpen: true }),
     },
-    headerTitle : {
-      variant   : "h6",
-      className : classes.title
+    
+    //ヘッダータイトル
+    headerTitle: {
+      variant: "h6",
+      className: classes.headerTitle
     },
+
+    //ダイアログ
     bookEntryDialog: {
-      open : pageProps.bookEntryDialogOpen,
-      onClose: () => setPageProps({...pageProps, bookEntryDialogOpen: false}),
+      open: pageProps.bookEntryDialogOpen,
+      onClose: () => setPageProps({ ...pageProps, bookEntryDialogOpen: false }),
       onSave: (book) => handleSaveBook(book)
     },
+
+    // 検索バー
     searchBar: {
-      search: (e) => search(e)
+      search: (e) => handleSearch(e)
     },
+
     //ホームアイコン
-    homeIcon: {
+    homeLink: {
       color: "white",
       underline: "none",
-      onClick: () => {router.push(appConst.URL.INDEX)},
-      className : classes.homeIcon
+      onClick: () => { router.push(AppConst.URL.INDEX) },
+      className: classes.homeLink
+    },
+
+    //サイドバー
+    sideBarDrawer: {
+      open: pageProps.sideBarDrawerOpen,
+      setPageProps: setPageProps
     }
-  }
-
-  /**
-   * ホーム画面のヘッダー
-   */
-  const getHomeAppBar = () => {
-    return (
-      <>
-        <IconButton {...compProps.iconButton}>
-          <MenuIcon />
-        </IconButton>
-          <Typography {...compProps.headerTitle}>
-            <Link {...compProps.homeIcon}>ホーム</Link>
-          </Typography>
-
-          {/* 検索 */}
-          <SearchBar {...compProps.searchBar}/>
-          {/* <Avatar /> */}
-          
-          <Box ml={2}>
-            <Button {...compProps.headerButton}>
-              <AddIcon />本追加
-            </Button>
-          </Box>
-          {/* 本登録ダイアログ */}
-          <BookEntryDialog {...compProps.bookEntryDialog} />
-          {/* ドロワー */}
-          <SideBarDrawer open={pageProps.sideBarDrawerOpen} setPageProps={setPageProps}/>
-      </>
-    )
   }
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          {getAppBar()}
+          {/* メニューアイコン */}
+          <IconButton {...compProps.iconButton}>
+            <MenuIcon />
+          </IconButton>
+
+          {/* ヘッダータイトル */}
+          <Typography {...compProps.headerTitle}>
+            <Link {...compProps.homeLink}>ホーム</Link>
+          </Typography>
+
+          {/* 検索 */}
+          <SearchBar {...compProps.searchBar} />
+
+          {/* 本追加ボタン */}
+          <Box ml={2}>
+            <Button {...compProps.headerButton}>
+              <AddIcon />本追加
+            </Button>
+          </Box>
+
+          {/* 本登録ダイアログ */}
+          <BookEntryDialog {...compProps.bookEntryDialog} />
+
+          {/* サイドバー */}
+          <SideBarDrawer {...compProps.sideBarDrawer} />
         </Toolbar>
       </AppBar>
     </div>

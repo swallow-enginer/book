@@ -1,7 +1,6 @@
 import auth0 from "@auth/auth0";
 import DB from "@lib/dbConfig";
-
-//book_IDに変更
+import AppConst from "@lib/appConst"
 
 export default async (req, res) => {
     //ユーザー情報の取得
@@ -11,9 +10,9 @@ export default async (req, res) => {
     }
 
     //本の情報を取得
-    if (req.method === "GET") {
+    if (req.method === AppConst.HTTP_METHOD.GET) {
         //一覧取得
-        if (req.query.type === "page") {
+        if (req.query.item === AppConst.URL_QUERY_ITEM.PAGE) {
             await setPage(res, user.user_id);
             return;
         }

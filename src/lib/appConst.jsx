@@ -1,72 +1,42 @@
 export default Object.freeze({
-  CATEGORY_ID: {
-    ENTRY: -1
-  },
-  SCREEN: {
-    HOME     : 0,
-    REGISTER : 1
-  },
 
+  //ページのURL
   URL: {
     INDEX            : "/",
-    HOME             : "/home",
-    TEMPLATE_INPUT   : "/template-input",
-    TEMPLATE_SHOW    : "/template-show",
-    SEARCH           : "/search",
     SEARCH_RESULT    : "/search-result",
-    AMAZON_BOOK      : "https://www.googleapis.com/books/v1/volumes",
-  },
-
-  API: {
-    TEMPLATE :"/api/template",
-    CATEGORY :"/api/category",
-    BOOK : "/api/book",
-    USER : "/api/user",
   },
   
-  /** テンプレート一覧の並び順 */
-  TEMPLATE_LIST_SORT: {
-    NEW : "new",
-    OLD : "old",
+  //APIのURL
+  API: {
+    BOOK : "/api/book",
+    USER : "/api/user",
+    AMAZON_BOOK      : "https://www.googleapis.com/books/v1/volumes",
+  },
+  
+  //取得したいデータのタイプ
+  URL_QUERY_TYPE: {
+    SINGLE: "single",   //1件のデータ
+    LIST:   "list"      //一覧のデータ
   },
 
-  URL_QUERY_TYPE: {
-    ONE: "one",
-    LIST: "list"
+  //取得したいデータの項目
+  URL_QUERY_ITEM: {
+    PAGE : "page",      //総ページ数の取得
   },
+
+  MAX_BOOK_BY_PAGE : 10,   //1ページに表示する本の件数
 
   /** HTTPステータスコード */
   HTTP_STATUS_CODE: {
-    PRECONDITION_FAILED:412, //クエリパラーメータがなかった場合
+    REDIRECT           : 303,  //リダイレクト
+    BAD_REQUEST        : 400,  //リクエストの不正
   },
 
-  REGISTER_DATA: {
-    DATE     : "memo_date",
-    MEMO     : "memo",
-    CATEGORY : "category_id"
+  ERROR_MESSAGE: {
+    NOT_FOUND_DATA: "該当データがありません。"
   },
 
-  SEARCH_DATA: {
-    DATE_FROM  : "date_from",
-    DATE_TO    : "date_to",
-    KEYWORD    : "keyword",
-    CATEGORY   : "category"
-  },
-
-  CATEGORY_DEFAULT: {
-    KEY   : 0,
-    VALUE : "メモ"
-  },
-
-  SCREEN_TITLE: {
-    REGISTER : "メモ登録",
-    CALENDAR : "カレンダー"
-  },
-
-  BUTTON_TITLE: {
-    REGISTER : "登録"
-  },
-  
+  //HTTPメソッド
   HTTP_METHOD: {
     GET     : "GET",
     POST    : "POST",
@@ -74,7 +44,6 @@ export default Object.freeze({
     DELETE  : "DELETE",
   },
 
-  ACTION_TYPE: {
-    SET_USER : "SET_USER",
-  },
+  //エラーメッセージの表示時間(ms)
+  ERROR_MESSAGE_DURATION: 2000,
 });

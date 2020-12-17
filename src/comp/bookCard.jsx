@@ -36,11 +36,14 @@ const bookCard = (props) => {
       onSave: () => setPageProps({...pageProps, bookShowDialogOpen: false}),
       
     },
-
+    
+    //タイトルのリンク
     showLink: {
       href: "#",
       onClick: () => setPageProps({...pageProps, bookShowDialogOpen: true})
     },
+
+    //タイトル
     title: {
       className: classes.title
     }
@@ -54,9 +57,7 @@ const bookCard = (props) => {
       <Box {...compProps.title}>
         {/* タイトルの表示 */}
         <Typography>
-          <Link {...compProps.showLink}>
-          {props.bookParam.title}
-          </Link>
+          <Link {...compProps.showLink}>{props.bookParam.title}</Link>
         </Typography>
 
         {/* ページ数 */}

@@ -5,61 +5,74 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import BookList from "@comp/bookList";
 import withAuth from "@auth/with-auth"
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
-const index = function Index(props) {
+const index = function Index() {
 
-  //本のリスト
-  const [bookList, setBookList] = useState([]);
-  const [page, setPage] = useState(0);
-  const [toast, setToast] = useState({open:false});
+  const [bookList, setBookList] = useState([]);        //本のリスト
+  const [page, setPage] = useState(0);                 //総ページ数
+  const [toast, setToast] = useState({ open: false });    //エラーメッセージの表示・非表示
   const router = useRouter();
+  //エラーメッセージのクローズ
+  const handleToastClose = () => {
+    setToast({ open: false })
+  }
+
+  const pageProps = {
+    //スナックバー
+    snackBar: {
+      open: toast.open,
+      autoHideDuration: AppConst.ERROR_MESSAGE_DURATION,
+      onClose: handleToastClose,
+      anchorOrigin: { vertical: "top", horizontal: "center" },
+    },
+
+    //警告
+    alert: {
+      onClose: handleToastClose,
+      severity: "error",
+    },
+
+    //本のリスト
+    bookList: {
+      bookList: bookList,
+      title: "最近の記録",
+    }
+  }
 
   //レンダリング時の処理
-  useEffect (() => {
-    //トーストの表示
-    if(router.query.message) {
-      setToast({open : true, message:router.query.message})
+  useEffect(() => {
+    //エラーメッセージの表示の表示
+    if (router.query.message) {
+      setToast({ open: true, message: router.query.message })
     }
     (async () => {
       //本の一覧を取得
-      setBookList(await (await fetch(AppConst.API.BOOK + "?" + new URLSearchParams({type: "list"}))).json());
+      setBookList(await (await fetch(AppConst.API.BOOK + "?" + new URLSearchParams({ type: AppConst.URL_QUERY_TYPE.LIST }))).json());
 
       //ページ総数の取得
-      setPage(Number((await (await fetch(AppConst.API.USER + "?" + new URLSearchParams({type: "page"}))).json()).page))
+      setPage(Number((await (await fetch(AppConst.API.USER + "?" + new URLSearchParams({ item: AppConst.URL_QUERY_ITEM.PAGE }))).json()).page))
     })();
-  },[]);
+  }, []);
 
-  const handleClose = () => {
-    setToast({open:false})
-  }
-
-  /**
-   * テンプレート追加
-   */
-  const addTemplate = () => {
-    router.push(AppConst.URL.TEMPLATE_INPUT)
-  }
   return (
     <>
-      <AppBar onButtonClick={addTemplate}/>
-        <Box mx={10} mt={4}>
-          <Box display="flex" alignItems="center">
-            <h2>完読状況</h2>
-          </Box>
-          <Typography>{`現在のページ数：${page.toLocaleString()}ページ`}</Typography>
-          <Typography>{`現在の高さ：${(Math.ceil(0.15 * page)).toLocaleString()}mm`}</Typography>
-          <Typography>{`現在の重さ：${(Math.ceil(0.5 * page)).toLocaleString()}g`}</Typography>
-          <BookList 
-            bookList={bookList}
-            title="最近の記録"/>
+      <AppBar />
+      <Box mx={10} mt={4}>
+        <Box display="flex" alignItems="center">
+          <h2>完読状況</h2>
         </Box>
-        
-        {/* メッセージ表示 */}
-        <Snackbar open={toast.open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal:"center" }}>
-          <Alert onClose={handleClose} severity="error">{toast.message}</Alert>
+        <Typography>{`現在のページ数：${page.toLocaleString()}ページ`}</Typography>
+        <Typography>{`現在の高さ：${(Math.ceil(0.15 * page)).toLocaleString()}mm`}</Typography>
+        <Typography>{`現在の重さ：${(Math.ceil(0.5 * page)).toLocaleString()}g`}</Typography>
+        <BookList {...pageProps.bookList} />
+      </Box>
+
+      {/* メッセージ表示 */}
+      <Snackbar {...pageProps.snackBar}>
+        <Alert {...pageProps.alert}>{toast.message}</Alert>
       </Snackbar>
     </>
   )
