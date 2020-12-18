@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -8,13 +8,14 @@ import { useRouter } from 'next/router';
 import AppConst from "@lib/appConst";
 
 const styles = theme => ({
-    root: {
-    },
+    //入力項目
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         width: 200,
     },
+
+    //検索バー
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -29,6 +30,8 @@ const styles = theme => ({
             width: 'auto',
         },
     },
+
+    //検索アイコン
     searchIcon: {
         width: theme.spacing.unit * 9,
         height: '100%',
@@ -42,6 +45,8 @@ const styles = theme => ({
         color: 'inherit',
         width: '100%',
     },
+
+    //入力項目
     inputInput: {
         paddingTop: theme.spacing.unit,
         paddingRight: theme.spacing.unit,
@@ -50,9 +55,9 @@ const styles = theme => ({
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            width: 120,
+            width: "120px",
             '&:focus': {
-                width: 200,
+                width: "200px",
             },
         },
     },
@@ -61,27 +66,23 @@ const styles = theme => ({
 function Search(props) {
     const { classes } = props;
     const router = useRouter();
+    const [keyword, setKeyword] = useState();   //キーワード
 
-    const [keyword, setKeyword] = useState();
+    //検索処理
+    const handleSearch = (e) => {
+        //Enterボタン以外
+        if (e.keyCode !== 13 || !keyword) {
+            return;
+        }
 
-   /**
-   * 
-   * @param {object} e イベント
-   */
-  const search = (e) => {
-    //Enterボタン以外
-    if (e.keyCode !== 13 || !keyword) {
-      return;
+        router.push({
+            pathname: AppConst.URL.SEARCH_RESULT,
+            query: { keyword: keyword }
+        })
     }
-    
-    router.push({
-        pathname: AppConst.URL.SEARCH_RESULT,
-        query: {keyword: keyword}
-    })
-  }
 
     return (
-        <div className={classes.root}>
+        <div>
             <div className={classes.search}>
                 <div className={classes.searchIcon}>
                     <SearchIcon />
@@ -95,7 +96,7 @@ function Search(props) {
                         input: classes.inputInput,
                     }}
                     onChange={(e) => setKeyword(e.target.value)}
-                    onKeyDown={search}
+                    onKeyDown={handleSearch}
                 />
             </div>
         </div>

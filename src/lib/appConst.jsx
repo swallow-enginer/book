@@ -4,6 +4,7 @@ export default Object.freeze({
   URL: {
     INDEX            : "/",
     SEARCH_RESULT    : "/search-result",
+    NO_IMAGE_URL     : "/no_image.jpg"
   },
   
   //APIのURL
@@ -32,6 +33,7 @@ export default Object.freeze({
     BAD_REQUEST        : 400,  //リクエストの不正
   },
 
+  //エラーメッセージ
   ERROR_MESSAGE: {
     NOT_FOUND_DATA: "該当データがありません。"
   },

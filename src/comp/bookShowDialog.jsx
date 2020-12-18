@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   dialog: {
     width: "400px"
   },
-  parentButton: {
+  page: {
     marginTop: theme.spacing(4)
   },
   bookImage: {
@@ -38,6 +38,7 @@ const bookShowDialog = (props) => {
   }
 
   const compProps = {
+    //ダイアログ
     dialog: {
       open: props.open,
       onClose: handleBookEntryDialogClose,
@@ -46,36 +47,24 @@ const bookShowDialog = (props) => {
         paper: classes.dialog
       }
     },
+
+    //ダイアログコンテンツ
     dialogContent: {
       dividers: true
     },
+
+    //ダイアログテキスト
     dialogContentText: {
       tabIndex: -1
     },
-    saveButton: {
-      onClick: () => props.onSave(book),
-      color: "primary",
-      disabled: !book.bookNm || (!book.bookPage || !isFinite(book.bookPage))
-    },
+    // saveButton: {
+    //   onClick: () => props.onSave(book),
+    //   color: "primary",
+    //   disabled: !book.bookNm || (!book.bookPage || !isFinite(book.bookPage))
+    // },
     cancelButton: {
       onClick: handleBookEntryDialogClose,
       color: "primary"
-    },
-    bookNm: {
-      label: "タイトル",
-      variant: "outlined",
-      fullWidth: true,
-      value: book.bookNm,
-      onChange: (e) => setBook({...book, bookNm: e.target.value}),
-    },
-    parentBook: {
-      label: "ページ数",
-      value: book.bookPage,
-      variant: "outlined",
-      className: classes.parentButton,
-      fullWidth: true,
-      size:"small",
-      onChange: (e) => setBook({...book, bookPage: e.target.value})
     },
     bookImage: {
       className: classes.bookImage,
@@ -89,10 +78,12 @@ const bookShowDialog = (props) => {
         <DialogTitle>{props.bookParam.title}</DialogTitle>
 
         <DialogContent {...compProps.dialogContent}>
+          {/* 画像 */}
           <Box {...compProps.bookImage}>
             <img src={props.bookParam.image_url} />
           </Box>
 
+          {/* ページ数 */}
           <DialogContentText {...compProps.dialogContentText}>
             <Typography>{props.bookParam.page}ページ</Typography>
           </DialogContentText>
