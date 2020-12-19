@@ -1,5 +1,5 @@
-import auth0 from '@/auth/auth0';
-import User from "@/model/userModel";
+import auth0 from '~//src/lib/auth0/auth0';
+import User from "~/src/model/userModel";
 
 export default async function callback(req, res) {
   try {

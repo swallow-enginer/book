@@ -1,12 +1,5 @@
 {
     "compilerOptions": {
       "baseUrl": ".",
-      "paths": {
-        "@/lib/*"   : ["./src/lib/*"],
-        "@/model/*" : ["./src/model/*"],
-        "@/comp/*"  : ["./src/comp/*"],
-        "@/api/*"   : ["./pages/api/*"],
-        "@/auth/*"   : ["./src/lib/auth0/*"],
-      }
     }
-  }
+}

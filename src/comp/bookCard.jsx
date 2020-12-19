@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import BookShowDialog  from "@/comp/bookShowDialog";
+import BookShowDialog  from "~/src/comp/bookShowDialog";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
-import BookImage from "@/comp/bookImage";
+import BookImage from "~/src/comp/bookImage";
 import { makeStyles } from '@material-ui/core';
 
 const bookCard = (props) => {
