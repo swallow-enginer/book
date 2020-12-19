@@ -1,8 +1,8 @@
-import Book from "@model/bookModel";
-import ReadingBook from "@model/readingBookModel";
-import auth0 from "@auth/auth0";
-import DB from "@lib/dbConfig";
-import AppConst from "@lib/appConst";
+import Book from "@/model/bookModel";
+import ReadingBook from "@/model/readingBookModel";
+import auth0 from "@/auth/auth0";
+import DB from "@/lib/dbConfig";
+import AppConst from "@/lib/appConst";
 
 export default async (req, res) => {
     //ユーザー情報の取得

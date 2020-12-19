@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core';
-import AppConst from "@lib/appConst";
+import AppConst from "@/lib/appConst";
 
 const bookImage = (props) => {
   const [stored, setStored] = useState();   //登録済み本判定

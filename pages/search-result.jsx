@@ -1,6 +1,6 @@
-import AppBar from "@comp/appBar";
-import BookList from "@comp/bookList";
-import AppConst from "@lib/appConst";
+import AppBar from "@/comp/appBar";
+import BookList from "@/comp/bookList";
+import AppConst from "@/lib/appConst";
 import Box from '@material-ui/core/Box';
 import React from 'react';
 

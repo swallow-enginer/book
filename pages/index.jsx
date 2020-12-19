@@ -1,10 +1,10 @@
-import AppBar from "@comp/appBar";
+import AppBar from "@/comp/appBar";
 import { useRouter } from 'next/router';
-import AppConst from "@lib/appConst";
+import AppConst from "@/lib/appConst";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import BookList from "@comp/bookList";
-import withAuth from "@auth/with-auth"
+import BookList from "@/comp/bookList";
+import withAuth from "@/auth/with-auth"
 import { useEffect, useState } from "react";
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';

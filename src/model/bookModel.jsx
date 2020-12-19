@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import DbConfig from '@lib/dbConfig'
+import DbConfig from '@/lib/dbConfig'
 
 /**
  * book テーブルの Entity モデル

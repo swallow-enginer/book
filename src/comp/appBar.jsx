@@ -8,12 +8,12 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AddIcon from '@material-ui/icons/Add';
 import Box from '@material-ui/core/Box';
 import React, { useState } from 'react';
-import AppConst from "@lib/appConst";
+import AppConst from "@/lib/appConst";
 import { useRouter } from 'next/router';
-import BookEntryDialog from '@comp/BookEntryDialog'
-import SearchBar from '@comp/searchBar'
+import BookEntryDialog from '@/comp/BookEntryDialog'
+import SearchBar from '@/comp/searchBar'
 import Link from '@material-ui/core/Link';
-import SideBarDrawer from "@comp/sideBarDrawer"
+import SideBarDrawer from "@/comp/sideBarDrawer"
 
 const useStyles = makeStyles((theme) => ({
   root: {

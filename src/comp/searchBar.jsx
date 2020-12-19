@@ -5,7 +5,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import Input from '@material-ui/core/Input';
 import SearchIcon from '@material-ui/icons/Search';
 import { useRouter } from 'next/router';
-import AppConst from "@lib/appConst";
+import AppConst from "@/lib/appConst";
 
 const styles = theme => ({
     //入力項目
