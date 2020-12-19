@@ -10,7 +10,7 @@ import Box from '@material-ui/core/Box';
 import React, { useState } from 'react';
 import AppConst from "~/src/lib/appConst";
 import { useRouter } from 'next/router';
-import BookEntryDialog from '~/src/comp/BookEntryDialog'
+import BookEntryDialog from './BookEntryDialog'
 import SearchBar from '~/src/comp/searchBar'
 import Link from '@material-ui/core/Link';
 import SideBarDrawer from "~/src/comp/sideBarDrawer"
