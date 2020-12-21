@@ -65,8 +65,8 @@ const index = function Index() {
           <h2>完読状況</h2>
         </Box>
         <Typography>{`現在のページ数：${page.toLocaleString()}ページ`}</Typography>
-        <Typography>{`現在の高さ：${(Math.ceil(0.15 * page)).toLocaleString()}mm`}</Typography>
-        <Typography>{`現在の重さ：${(Math.ceil(0.5 * page)).toLocaleString()}g`}</Typography>
+        <Typography>{`現在の高さ：${(Math.ceil(AppConst.PER_PAGE.HEIGHT * page)).toLocaleString()}mm`}</Typography>
+        <Typography>{`現在の重さ：${(Math.ceil(AppConst.PER_PAGE.WEIGHT * page)).toLocaleString()}g`}</Typography>
         <BookList {...pageProps.bookList} />
       </Box>
 

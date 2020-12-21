@@ -7,6 +7,12 @@ export default Object.freeze({
     NO_IMAGE_URL     : "/no_image.jpg"
   },
   
+  //1ページの情報
+  PER_PAGE: {
+    WEIGHT : 0.5,   //1ページの重さ
+    HEIGHT : 0.15,  //1ページの高さ
+  },
+  
   //APIのURL
   API: {
     BOOK : "/api/book",
