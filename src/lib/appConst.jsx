@@ -17,6 +17,7 @@ export default Object.freeze({
   API: {
     BOOK : "/api/book",
     USER : "/api/user",
+    LOGIN : "/api/login",
     AMAZON_BOOK      : "https://www.googleapis.com/books/v1/volumes",
   },
   
