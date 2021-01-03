@@ -113,7 +113,7 @@ export default function ButtonAppBar() {
     homeLink: {
       color: "white",
       underline: "none",
-      onClick: () => { router.push(AppConst.URL.INDEX) },
+      onClick: () => { router.push(AppConst.URL.HOME) },
       className: classes.homeLink
     },
 

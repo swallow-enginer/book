@@ -1,95 +1,81 @@
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import Avatar from '@material-ui/core/Avatar';
-import { makeStyles } from '@material-ui/core';
+import AppBar from "~/src/comp/appBar";
 import { useRouter } from 'next/router';
 import AppConst from "~/src/lib/appConst";
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import BookList from "~/src/comp/bookList";
+import withAuth from "~//src/lib/auth0/with-auth"
+import { useEffect, useState } from "react";
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 const home = function Home() {
+
+  const [bookList, setBookList] = useState([]);        //本のリスト
+  const [page, setPage] = useState(0);                 //総ページ数
+  const [toast, setToast] = useState({ open: false });    //エラーメッセージの表示・非表示
   const router = useRouter();
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      marginTop: theme.spacing(3),
-      "& > *" : {marginBottom: theme.spacing(3)}
-    },
-    avatar_root: {
-      marginLeft: "auto",
-      marginRight: "auto",
-    },
-  }));
-
-  const classes = useStyles();
-
-  const compProps = {
-    root : {
-      display:"flex",
-      flexDirection: "column",
-      m:"auto",
-      width: "500px",
-      className: classes.root,
-    },
-
-    box_intro: {
-      className: classes.root,
-      textAlign:"center",
-    },
-
-    avatar : {
-      src : "/book.png",
-      classes: {
-        root:classes.avatar_root
-      }
-    },
-
-    subTitle : {
-      variant: "h4",
-      color: "textSecondary",
-    },
-
-    text: {
-      color: "textSecondary",
-    },
-
-    signUpButton: {
-      variant: "contained",
-      color: "primary",
-      disableElevation: true,
-      onClick: () => router.push(AppConst.API.LOGIN),
-    },
-    loginButton: {
-      variant: "outlined",
-      color: "primary",
-      onClick: () => router.push(AppConst.API.LOGIN),
-    },
+  //エラーメッセージのクローズ
+  const handleToastClose = () => {
+    setToast({ open: false })
   }
+
+  const pageProps = {
+    //スナックバー
+    snackBar: {
+      open: toast.open,
+      autoHideDuration: AppConst.ERROR_MESSAGE_DURATION,
+      onClose: handleToastClose,
+      anchorOrigin: { vertical: "top", horizontal: "center" },
+    },
+
+    //警告
+    alert: {
+      onClose: handleToastClose,
+      severity: "error",
+    },
+
+    //本のリスト
+    bookList: {
+      bookList: bookList,
+      title: "最近の記録",
+    }
+  }
+
+  //レンダリング時の処理
+  useEffect(() => {
+    //エラーメッセージの表示の表示
+    if (router.query.message) {
+      setToast({ open: true, message: router.query.message })
+    }
+    (async () => {
+      //本の一覧を取得
+      setBookList(await (await fetch(AppConst.API.BOOK + "?" + new URLSearchParams({ type: AppConst.URL_QUERY_TYPE.LIST }))).json());
+
+      //ページ総数の取得
+      setPage(Number((await (await fetch(AppConst.API.USER + "?" + new URLSearchParams({ item: AppConst.URL_QUERY_ITEM.PAGE }))).json()).page))
+    })();
+  }, []);
+
   return (
-      <Box {...compProps.root}>
-        <Box {...compProps.box_intro}>
-          <Typography {...compProps.text}>読んだ本を登録しよう！</Typography>
-          <Avatar {...compProps.avatar} />
-          <Typography {...compProps.text}>登録した本は重さや高さに変換できます</Typography>
+    <>
+      <AppBar />
+      <Box mx={10} mt={4}>
+        <Box display="flex" alignItems="center">
+          <h2>完読状況</h2>
         </Box>
-
-        <Box><Divider/></Box>
-
-        <Box>
-          <Typography {...compProps.subTitle}y>重さ</Typography>
-          <Box pl={3}><Typography {...compProps.text}>100ページ⇒{AppConst.PER_PAGE.WEIGHT * 100}g</Typography></Box>
-        </Box>
-
-        <Box>
-          <Typography {...compProps.subTitle}>高さ</Typography>
-          <Box pl={3}><Typography {...compProps.text}>100ページ⇒{AppConst.PER_PAGE.HEIGHT * 100}mm</Typography></Box>
-        </Box>
-
-        <Divider/>
-        
-        <Button {...compProps.signUpButton}>アカウント作成・ログイン</Button>
+        <Typography>{`現在のページ数：${page.toLocaleString()}ページ`}</Typography>
+        <Typography>{`現在の高さ：${(Math.ceil(AppConst.PER_PAGE.HEIGHT * page)).toLocaleString()}mm`}</Typography>
+        <Typography>{`現在の重さ：${(Math.ceil(AppConst.PER_PAGE.WEIGHT * page)).toLocaleString()}g`}</Typography>
+        <BookList {...pageProps.bookList} />
       </Box>
 
+      {/* メッセージ表示 */}
+      <Snackbar {...pageProps.snackBar}>
+        <Alert {...pageProps.alert}>{toast.message}</Alert>
+      </Snackbar>
+    </>
   )
 }
 
-export default home;
+export default withAuth(home);

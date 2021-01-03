@@ -29,4 +29,5 @@ const readingBookModel = DbConfig.define('reading_book', {
   freezeTableName: true,
 });
 
+readingBookModel.sync();
 export default readingBookModel;

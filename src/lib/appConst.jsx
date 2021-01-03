@@ -3,6 +3,7 @@ export default Object.freeze({
   //ページのURL
   URL: {
     INDEX            : "/",
+    HOME             : "/home",
     SEARCH_RESULT    : "/search-result",
     NO_IMAGE_URL     : "/no_image.jpg"
   },

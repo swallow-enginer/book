@@ -4,7 +4,7 @@ import Sequelize from 'sequelize';
  * DB接続設定を定義
  */
 const dbConfig = new Sequelize(
-        process.env.DB_HOST,      //DB名
+        process.env.DB_DB,        //DB名
         process.env.DB_USER,      //ユーザー名
         process.env.DB_PASSWORD,  //パスワード
         {               //オプション
@@ -13,12 +13,10 @@ const dbConfig = new Sequelize(
 
             // 使用する DB 製品を指定
             dialect: 'postgres',
+            host: process.env.DB_HOST,
 
-            pool: {
-                max: 5,
-                min: 0,
-                acquire: 30000,
-                idle: 10000
+            dialectOptions: {
+                socketPath: process.env.DB_INSTANCE,
             },
             query:{raw:true}
 });

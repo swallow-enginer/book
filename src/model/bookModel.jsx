@@ -35,4 +35,6 @@ const bookModel = DbConfig.define('book', {
   freezeTableName: true,
 });
 
+bookModel.sync();
+
 export default bookModel;
