@@ -14,11 +14,12 @@ const dbConfig = new Sequelize(
             // 使用する DB 製品を指定
             dialect: 'postgres',
             host: process.env.DB_HOST,
+            operatorsAliases: false,
 
             dialectOptions: {
                 socketPath: process.env.DB_INSTANCE,
             },
-            query:{raw:true}
+            query:{raw:true},
 });
 
 module.exports = dbConfig;
