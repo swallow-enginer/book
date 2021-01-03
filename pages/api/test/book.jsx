@@ -1,8 +1,8 @@
-import DbConfig from '~/src/lib/dbConfig'
+import User from "~/src/model/userModel";
 export default async (req, res) => {
     try {
-        await DbConfig.authenticate();
-        exeSuccess(res, {status: "OK"})
+        const book = await User.findAll();
+        exeSuccess(res, book)
       } catch (error) {
         console.error('Unable to connect to the database:', error);
       }
