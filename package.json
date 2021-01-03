@@ -16,10 +16,10 @@
     "isomorphic-unfetch": "^3.1.0",
     "list-to-tree": "^2.2.3",
     "next": "9.5.5",
-    "pg": "^8.4.1",
+    "pg": "^7.8.1",
     "pg-hstore": "^2.3.3",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "sequelize": "^6.3.5"
+    "sequelize": "^4.43.1"
   }
 }
