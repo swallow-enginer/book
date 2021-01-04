@@ -3,8 +3,8 @@ export default Object.freeze({
   //ページのURL
   URL: {
     INDEX            : "/",
-    HOME             : "/home",
-    SEARCH_RESULT    : "/search-result",
+    HOME             : "/home/",
+    SEARCH_RESULT    : "/search-result/",
     NO_IMAGE_URL     : "/no_image.jpg"
   },
   
@@ -16,9 +16,9 @@ export default Object.freeze({
   
   //APIのURL
   API: {
-    BOOK : "/api/book",
-    USER : "/api/user",
-    LOGIN : "/api/login",
+    BOOK : "/api/book/",
+    USER : "/api/user/",
+    LOGIN : "/api/login/",
     AMAZON_BOOK      : "https://www.googleapis.com/books/v1/volumes",
   },
   
