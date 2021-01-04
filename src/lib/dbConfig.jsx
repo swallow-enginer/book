@@ -4,9 +4,9 @@ import Sequelize from 'sequelize';
  * DB接続設定を定義
  */
 const dbConfig = new Sequelize(
-        process.env.DB_DB,        //DB名
+        process.env.DB_DB,                      //DB名
         process.env.SQL_BOOK_LOS_USERNAME,      //ユーザー名
-        process.env.SQL_BOOK_LOS_PASSWORD,  //パスワード
+        process.env.SQL_BOOK_LOS_PASSWORD,      //パスワード
         {               //オプション
             // // 接続先ホストを指定
             // host: 'localhost',
@@ -16,9 +16,9 @@ const dbConfig = new Sequelize(
             host: process.env.SQL_BOOK_LOS_IP,
             operatorsAliases: false,
 
-            dialectOptions: {
-                socketPath: process.env.DB_INSTANCE,
-            },
+            // dialectOptions: {
+            //     socketPath: process.env.DB_INSTANCE,
+            // },
             query:{raw:true},
 });
 
