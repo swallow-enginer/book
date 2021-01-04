@@ -5,15 +5,15 @@ import Sequelize from 'sequelize';
  */
 const dbConfig = new Sequelize(
         process.env.DB_DB,        //DB名
-        process.env.DB_USER,      //ユーザー名
-        process.env.DB_PASSWORD,  //パスワード
+        process.env.SQL_BOOK_LOS_USERNAME,      //ユーザー名
+        process.env.SQL_BOOK_LOS_PASSWORD,  //パスワード
         {               //オプション
             // // 接続先ホストを指定
             // host: 'localhost',
 
             // 使用する DB 製品を指定
             dialect: 'postgres',
-            host: process.env.DB_HOST,
+            host: process.env.SQL_BOOK_LOS_IP,
             operatorsAliases: false,
 
             dialectOptions: {
