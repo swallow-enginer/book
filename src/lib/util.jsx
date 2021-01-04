@@ -1,4 +1,3 @@
-import User from "~/src/model/userModel";
 import Auth0 from "~//src/lib/auth0/auth0";
 import AppConst from "~/src/lib/appConst";
 
@@ -14,13 +13,6 @@ export const getUser = async (req, res) => {
         res.end();
         return;
     }
-    //auth0のID
-    const sub_id = session.user.sub;
-    //ユーザーの登録
-    const [user] = await User.findOrCreate({
-        where: { sub_id: sub_id},
-        defaults: { sub_id: sub_id},
-      });
 
-    return user;
+    return session.user;
 }
