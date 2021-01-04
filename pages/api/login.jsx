@@ -1,11 +1,9 @@
-import auth0 from '~//src/lib/auth0/auth0';
+import Auth0 from '~//src/lib/auth0/auth0';
 import AppConst from '~/src/lib/appConst';
-
-
 
 export default async function login(req, res) {
   try {
-    await auth0.handleLogin(req, res, {
+    await Auth0.handleLogin(req, res, {
       redirectTo: req.query.redirectTo? req.query.redirectTo : AppConst.URL.HOME
     });
   } catch (error) {

@@ -11,7 +11,7 @@ import Alert from '@material-ui/lab/Alert';
 
 const home = function Home() {
 
-  const [bookList, setBookList] = useState([]);        //本のリスト
+  const [bookList, setBookList] = useState();        //本のリスト
   const [page, setPage] = useState(0);                 //総ページ数
   const [toast, setToast] = useState({ open: false });    //エラーメッセージの表示・非表示
   const router = useRouter();

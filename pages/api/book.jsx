@@ -1,8 +1,8 @@
 import Book from "~/src/model/bookModel";
 import ReadingBook from "~/src/model/readingBookModel";
-import auth0 from "~//src/lib/auth0/auth0";
 import DB from "~/src/lib/dbConfig";
 import AppConst from "~/src/lib/appConst";
+import {getUser} from "~/src/lib/util"
 
 export default async (req, res) => {
     //ユーザー情報の取得
@@ -144,19 +144,4 @@ const exeSuccess = (res, result) => {
     res.statusCode = 200
     res.setHeader('Content-Type', 'application/json')
     res.end(JSON.stringify(result));
-}
-
-//ユーザー情報の取得
-const getUser = async (req, res) => {
-    //セッション情報の取得
-    const session = await auth0.getSession(req);
-    //リダイレクト
-    if (!session || !session.user) {
-        res.writeHead(302, {
-          Location: '/api/login'
-        });
-        res.end();
-        return;
-    }
-    return session.user;
 }

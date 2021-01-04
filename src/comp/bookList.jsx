@@ -3,6 +3,7 @@ import Box from '@material-ui/core/Box';
 import BookCard from "~/src/comp/bookCard";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   gridItem: {
@@ -33,13 +34,18 @@ export default function MenuListComposition(props) {
       </Box>
 
       {/* カードのリスト表示 */}
-      <Grid container spacing={1}>
-        {props.bookList.map(item =>
-          <Grid {...compProps.gridItem} key={item.id}>
-            <BookCard bookParam={item}/>
+      {props.bookList === undefined 
+        ? <CircularProgress />
+        : (
+          <Grid container spacing={1}>
+          
+            {props.bookList.map(item =>
+              <Grid {...compProps.gridItem} key={item.id}>
+                <BookCard bookParam={item}/>
+              </Grid>
+            )}
           </Grid>
         )}
-      </Grid>
     </>
   );
 }

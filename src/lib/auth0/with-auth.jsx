@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import auth0 from '~//src/lib/auth0/auth0';
+import Auth0 from '~//src/lib/auth0/auth0';
 import { fetchUser } from '~//src/lib/auth0/user';
 import createLoginUrl from '~//src/lib/auth0/url-helper';
 import RedirectToLogin from '~//src/lib/auth0/login-redirect';
@@ -15,7 +15,7 @@ export default function withAuth(InnerComponent) {
         };
       }
 
-      const session = await auth0.getSession(ctx.req);
+      const session = await Auth0.getSession(ctx.req);
       if (!session || !session.user) {
         ctx.res.writeHead(302, {
           Location: createLoginUrl(ctx.req.url)
