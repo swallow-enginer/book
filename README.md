@@ -6,26 +6,26 @@
 [完読本管理サイト](https://book-syu.vercel.app/)
 
 **トップ画面**
-![](https://storage.googleapis.com/zenn-user-upload/5w3cwy5pelq4pyk5yeknngq3ulxp)
+![](https://book-syu.vercel.app/top.jpg)
 
 **ログイン画面**
-![](https://storage.googleapis.com/zenn-user-upload/hacm39zpn8u5tv0xhmazxwdeupss)
+![](https://book-syu.vercel.app/login.jpg)
 
 **ホーム画面**
-![](https://storage.googleapis.com/zenn-user-upload/4jt53q8kg0z66yajo53ehdqynp7l)
+![](https://book-syu.vercel.app/home.jpg)
 
 **検索結果画面**
-![](https://storage.googleapis.com/zenn-user-upload/qyz05nlvccglrt5issuz5rp4u0l8)
+![](https://book-syu.vercel.app/result.jpg)
 
 ## 使い方
-**本の検索～本の登録**
+### 本の検索～本の登録
 ホーム画面の右上の検索窓で読んだ本のキーワードで検索します。すると、検索結果画面が表示されてキーワードに合致した本の一覧が表示されます。
 表示された本の画像の右下に「保存」ボタンがあるので、クリックすると「保存済」に変わり、ホーム画面に戻ると「最近読んだ本」の一覧に追加されています。
 
-**本の新規登録**
+## 本の新規登録
 キーワードで検索しても対象データが取得できないことがあります。その場合は、ホーム画面のヘッダーの右上の「本追加」ボタンをクリックして、登録します。
 登録後に画面を再読み込みすると追加した本が登録されているはずです。
-![](https://storage.googleapis.com/zenn-user-upload/35fw4tphhuhj8tq6zm6l0b9regbw)
+![](https://book-syu.vercel.app/insert.jpg)
 
 ## インストール方法
 `git clone`などでローカル環境にソースコードを複製したら以下のコマンドを叩きます。
@@ -47,19 +47,19 @@ yarn dev
 - データベース：[Cloud SQL](https://cloud.google.com/sql)
 
 ## 環境変数
--AUTH0_CLIENT_ID：Auth0のクライアントID
--AUTH0_CLIENT_SECRET：Auth0のクライアントシークレット
--AUTH0_SCOPE：Auth0のスコープ
--AUTH0_DOMAIN：Auth0のドメイン
--REDIRECT_URI：Auth0で認証後リダイレクトするURL
--POST_LOGOUT_REDIRECT_URI：Auth0でログアウト後、リダイレクトするURL
--SESSION_COOKIE_SECRET：クッキーの暗号化に使われるキー。最低32ビット以上。[クッキー暗号化キー生成サイト](https://generate-secret.now.sh/32)
--SESSION_COOKIE_LIFETIME：クッキーのライフタイム。推奨は7200(2時間)
+- AUTH0_CLIENT_ID：Auth0のクライアントID
+- AUTH0_CLIENT_SECRET：Auth0のクライアントシークレット
+- AUTH0_SCOPE：Auth0のスコープ
+- AUTH0_DOMAIN：Auth0のドメイン
+- REDIRECT_URI：Auth0で認証後リダイレクトするURL
+- POST_LOGOUT_REDIRECT_URI：Auth0でログアウト後、リダイレクトするURL
+- SESSION_COOKIE_SECRET：クッキーの暗号化に使われるキー。最低32ビット以上。[クッキー暗号化キー生成サイト](https://generate-secret.now.sh/32)
+- SESSION_COOKIE_LIFETIME：クッキーのライフタイム。推奨は7200(2時間)
 
--DB_DB：データベース名
--DB_USER：データベースのユーザー
--DB_PASSWORD：データベースのパスワード
--DB_HOST：データベースのホスト名(IP)
--DB_INSTANCE：データベースのインスタンス
+- DB_DB：データベース名
+- DB_USER：データベースのユーザー
+- DB_PASSWORD：データベースのパスワード
+- DB_HOST：データベースのホスト名(IP)
+- DB_INSTANCE：データベースのインスタンス
 
 
