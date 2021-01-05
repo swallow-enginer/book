@@ -5,18 +5,12 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-// import InboxIcon from '@material-ui/icons/MoveToInbox';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 import AppConst from "~/src/lib/appConst";
 
 export default function TemporaryDrawer(props) {
   const router = useRouter();
   const drawer_list = [
-    // {
-    //   title : "プロフィール",
-    //   url   : "/profile",
-    //   icon  : <InboxIcon />,
-    // },
     {
       title : "ログアウト",
       url   : AppConst.API.LOGOUT,

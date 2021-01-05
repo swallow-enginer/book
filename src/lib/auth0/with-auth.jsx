@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import Auth0 from '~//src/lib/auth0/auth0';
-import { fetchUser } from '~//src/lib/auth0/user';
-import createLoginUrl from '~//src/lib/auth0/url-helper';
-import RedirectToLogin from '~//src/lib/auth0/login-redirect';
+import { fetchUser } from '~/src/lib/auth0/user';
+import createLoginUrl from '~/src/lib/auth0/url-helper';
+import RedirectToLogin from '~/src/lib/auth0/login-redirect';
 
 export default function withAuth(InnerComponent) {
   return class Authenticated extends Component {

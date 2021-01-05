@@ -2,7 +2,7 @@ import Book from "~/src/model/bookModel";
 import ReadingBook from "~/src/model/readingBookModel";
 import DB from "~/src/lib/dbConfig";
 import AppConst from "~/src/lib/appConst";
-import {getUser} from "~/src/lib/util"
+import {getUser, exeSuccess} from "~/src/lib/util"
 
 export default async (req, res) => {
     //ユーザー情報の取得
@@ -137,11 +137,4 @@ const setBookList = async (req, res, user_id) => {
 
     //処理成功
     exeSuccess(res, data);
-}
-
-//処理成功時の処理
-const exeSuccess = (res, result) => {
-    res.statusCode = 200
-    res.setHeader('Content-Type', 'application/json')
-    res.end(JSON.stringify(result));
 }

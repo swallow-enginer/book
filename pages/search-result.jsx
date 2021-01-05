@@ -3,21 +3,28 @@ import BookList from "~/src/comp/bookList";
 import AppConst from "~/src/lib/appConst";
 import Box from '@material-ui/core/Box';
 import React from 'react';
+import Auth0 from '~//src/lib/auth0/auth0';
 
 export async function getServerSideProps(context) {
+  //非ログイン状態
+  if (!await Auth0.getSession(context.req)) {
+    setRedirect(context.res);
+    return;
+  }
+
   //検索キーワード
   const keyword = context.query.keyword;
   
   //キーワードが無ければホーム画面にリダイレクト
   if (!keyword) {
-    setRedirect(context.res);
+    setRedirect(context.res, AppConst.ERROR_MESSAGE.NOT_FOUND_DATA);
     return;
   }
 
   const response = await fetch (encodeURI(`${AppConst.API.AMAZON_BOOK}?q=${keyword}`));
   const bookList = await response.json()
   if (bookList.totalItems == 0) {
-    setRedirect(context.res);
+    setRedirect(context.res, AppConst.ERROR_MESSAGE.NOT_FOUND_DATA);
     return;
   }
 
@@ -30,8 +37,9 @@ export async function getServerSideProps(context) {
 }
 
 //リダイレクト処理
-const setRedirect = (res) => {
-  res.setHeader("location", `/?${new URLSearchParams({message : AppConst.ERROR_MESSAGE.NOT_FOUND_DATA})}`);
+const setRedirect = (res, message) => {
+
+  res.setHeader("location", `${AppConst.URL.HOME}?${new URLSearchParams({message : message})}`);
   res.statusCode = AppConst.HTTP_STATUS_CODE.REDIRECT;
   res.end();
 }

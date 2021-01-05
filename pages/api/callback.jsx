@@ -1,9 +1,9 @@
-import auth0 from '~//src/lib/auth0/auth0';
+import Auth0 from '~//src/lib/auth0/auth0';
 import User from "~/src/model/userModel";
 
 export default async function callback(req, res) {
   try {
-    await auth0.handleCallback(req, res, {
+    await Auth0.handleCallback(req, res, {
       onUserLoaded: async (req, res, session, state) => {
         //サブからユーザー情報を取得
         const [user_info] = await User.findOrCreate({

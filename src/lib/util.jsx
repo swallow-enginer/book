@@ -16,3 +16,10 @@ export const getUser = async (req, res) => {
 
     return session.user;
 }
+
+//処理成功時の処理
+export const exeSuccess = (res, result) => {
+  res.statusCode = 200
+  res.setHeader('Content-Type', 'application/json')
+  res.end(JSON.stringify(result));
+}

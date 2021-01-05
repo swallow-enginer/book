@@ -57,11 +57,6 @@ const bookShowDialog = (props) => {
     dialogContentText: {
       tabIndex: -1
     },
-    // saveButton: {
-    //   onClick: () => props.onSave(book),
-    //   color: "primary",
-    //   disabled: !book.bookNm || (!book.bookPage || !isFinite(book.bookPage))
-    // },
     cancelButton: {
       onClick: handleBookEntryDialogClose,
       color: "primary"
