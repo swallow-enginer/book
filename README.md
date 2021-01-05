@@ -25,6 +25,7 @@
 ## 本の新規登録
 キーワードで検索しても対象データが取得できないことがあります。その場合は、ホーム画面のヘッダーの右上の「本追加」ボタンをクリックして、登録します。
 登録後に画面を再読み込みすると追加した本が登録されているはずです。
+<BR>
 ![](https://book-syu.vercel.app/insert.jpg)
 
 ## インストール方法
@@ -47,19 +48,19 @@ yarn dev
 - データベース：[Cloud SQL](https://cloud.google.com/sql)
 
 ## 環境変数
-- AUTH0_CLIENT_ID：Auth0のクライアントID
-- AUTH0_CLIENT_SECRET：Auth0のクライアントシークレット
-- AUTH0_SCOPE：Auth0のスコープ
-- AUTH0_DOMAIN：Auth0のドメイン
-- REDIRECT_URI：Auth0で認証後リダイレクトするURL
-- POST_LOGOUT_REDIRECT_URI：Auth0でログアウト後、リダイレクトするURL
-- SESSION_COOKIE_SECRET：クッキーの暗号化に使われるキー。最低32ビット以上。[クッキー暗号化キー生成サイト](https://generate-secret.now.sh/32)
-- SESSION_COOKIE_LIFETIME：クッキーのライフタイム。推奨は7200(2時間)
+- 【**AUTH0_CLIENT_ID**】Auth0のクライアントID
+- 【**AUTH0_CLIENT_SECRET**】Auth0のクライアントシークレット
+- 【**AUTH0_SCOPE**】Auth0のスコープ
+- 【**AUTH0_DOMAIN**】Auth0のドメイン
+- 【**REDIRECT_URI**】Auth0で認証後リダイレクトするURL
+- 【**POST_LOGOUT_REDIRECT_URI**】Auth0でログアウト後、リダイレクトするURL
+- 【**SESSION_COOKIE_SECRET**】クッキーの暗号化に使われるキー。最低32ビット以上。[クッキー暗号化キー生成サイト](https://generate-secret.now.sh/32)
+- 【**SESSION_COOKIE_LIFETIME**】クッキーのライフタイム。推奨は7200(2時間)
 
-- DB_DB：データベース名
-- DB_USER：データベースのユーザー
-- DB_PASSWORD：データベースのパスワード
-- DB_HOST：データベースのホスト名(IP)
-- DB_INSTANCE：データベースのインスタンス
+- 【**DB_DB**】データベース名
+- 【**DB_USER**】データベースのユーザー
+- 【**DB_PASSWORD**】データベースのパスワード
+- 【**DB_HOST**】データベースのホスト名(IP)
+- 【**DB_INSTANCE**】データベースのインスタンス
 
 
