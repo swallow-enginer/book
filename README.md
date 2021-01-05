@@ -6,10 +6,10 @@
 [完読本管理サイト](https://book-syu.vercel.app/)
 
 ### トップ画面
-![](https://book-syu.vercel.app/top.jpg)
+![](https://book-syu.vercel.app/top.png)
 
 ### ログイン画面
-![](https://book-syu.vercel.app/login.jpg)
+![](https://book-syu.vercel.app/login.png)
 
 ### ホーム画面
 ![](https://book-syu.vercel.app/home.jpg)
@@ -26,7 +26,7 @@
 キーワードで検索しても対象データが取得できないことがあります。その場合は、ホーム画面のヘッダーの右上の「本追加」ボタンをクリックして、登録します。
 登録後に画面を再読み込みすると追加した本が登録されているはずです。
 <BR>
-![](https://book-syu.vercel.app/insert.jpg)
+![](https://book-syu.vercel.app/insert.png)
 
 ## インストール方法
 `git clone`などでローカル環境にソースコードを複製したら以下のコマンドを叩きます。
