@@ -5,16 +5,16 @@
 ## 画面イメージ
 [完読本管理サイト](https://book-syu.vercel.app/)
 
-**トップ画面**
+### トップ画面
 ![](https://book-syu.vercel.app/top.jpg)
 
-**ログイン画面**
+### ログイン画面
 ![](https://book-syu.vercel.app/login.jpg)
 
-**ホーム画面**
+### ホーム画面
 ![](https://book-syu.vercel.app/home.jpg)
 
-**検索結果画面**
+### 検索結果画面
 ![](https://book-syu.vercel.app/result.jpg)
 
 ## 使い方
