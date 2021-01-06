@@ -112,10 +112,6 @@ const setBookSingle = async (req, res, user_id) => {
 
 //本のリストを返却する
 const setBookList = async (req, res, user_id) => {
-    //オフセットとリミット
-    const offset = !req.query || !req.query.page ? 0: (req.query.page - 1) * AppConst.MAX_BOOK_BY_PAGE;
-    const limit = AppConst.MAX_BOOK_BY_PAGE;
-
     //ユーザーに登録されている本を全て取得
     const data = await DB.query(`
             SELECT 
@@ -129,9 +125,8 @@ const setBookList = async (req, res, user_id) => {
                 ON book.book_id = reading_book.book_id
             WHERE reading_book.user_id = ?
             ORDER BY reading_book.create_dtt DESC
-            OFFSET ? LIMIT ?
     `,{
-        replacements: [user_id, offset, limit],
+        replacements: [user_id],
         type: DB.QueryTypes.SELECT,
     });
 
