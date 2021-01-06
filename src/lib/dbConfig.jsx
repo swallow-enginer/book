@@ -15,7 +15,9 @@ const dbConfig = new Sequelize(
             dialect: 'postgres',
             host: process.env.DB_HOST,
             operatorsAliases: false,
-
+            pool: {
+                max: process.env.POOL_MAX,
+            },
             dialectOptions: {
                 socketPath: process.env.DB_INSTANCE,
             },
